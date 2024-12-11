@@ -21,6 +21,7 @@ import {
 import Contact from '../components/Contact';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaBuildingCircleCheck } from 'react-icons/fa6';
+import Footer from './footer.jsx'
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -57,6 +58,7 @@ export default function Listing() {
   }, [params.listingId]);
 
   return (
+    <>
     <main className="bg-white text-black min-h-screen p-5 flex flex-col items-center">
       {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
       {error && (
@@ -159,7 +161,7 @@ export default function Listing() {
                   <div className="relative p-6 bg-[#f3f4f6] rounded-lg shadow-lg flex items-center justify-center transition-transform hover:scale-105 hover:shadow-xl">
                     <FaParking className="text-5xl text-[#0a0a40] absolute -top-6 left-6 bg-[#ff6a35] p-3 rounded-full" />
                     <p className="ml-14 text-center font-semibold">
-                      {listing.parking ? 'Parking spot' : 'No Parking'}
+                      {listing.parking ? 'Parking spot' : 'Parking'}
                     </p>
                   </div>
                 </div>
@@ -169,6 +171,10 @@ export default function Listing() {
           </div>
         </div>
       )}
+      
     </main>
+    <div className='bg-blue-100'></div>
+    <Footer />
+    </>
   );
 }

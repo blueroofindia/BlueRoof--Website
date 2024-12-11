@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ListingItem from '../components/ListingItem';
 import { useLocation } from 'react-router-dom';
+import Footer from './footer.jsx'
 
 export default function Search() {
   const location = useLocation();
@@ -170,6 +171,7 @@ export default function Search() {
   };
 
   return (
+    <>
     <div className="p-7">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-6">
         {/* Search Bar */}
@@ -331,6 +333,10 @@ export default function Search() {
           )}
         </div>
       </div>
+      
     </div>
+    <div className='bg-blue-100'></div>
+      <Footer />
+    </>
   );
 }

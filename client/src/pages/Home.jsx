@@ -24,6 +24,7 @@ import five from '../assets/img5.jpg'
 import six from '../assets/img6.jpg'
 import seven from '../assets/img7.jpg'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import ContactPopup from '../components/ContactPopup'; // Add ContactPopup component import
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -32,6 +33,7 @@ export default function Home() {
   const [underConstructionListings, setUnderConstructionListings] = useState([]);
   const [nearingPossessionListings, setNearingPossessionListings] = useState([]);
   const [readyToMoveListings, setReadyToMoveListings] = useState([]);
+  const [isContactPopupOpen, setIsContactPopupOpen] = useState(false); // Add state for ContactPopup
   SwiperCore.use([Navigation]);
   console.log(offerListings);
   const [searchTerm, setSearchTerm] = useState('');
@@ -269,59 +271,82 @@ export default function Home() {
             <h2 className='text-5xl font-semibold text-slate-600'>Signature property</h2><br />
             <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=ready to move'}>Show more places ready to move</Link>
           </div>
-        </div>
-        <div className="flex justify-center items-center bg-blue-100 p-3">
-          <Card
-            image="https://firebasestorage.googleapis.com/v0/b/estate-ecommerce-app.appspot.com/o/1703695268787C.I-View-05.webp?alt=media&token=42604ca7-b1ad-4d5a-a65a-d1ebe1abb753"
-            title="Kalpataru Vivant"
-            description="Andheri East, Western Suburbs, Mumbai"
-            price="2.45 Cr - 3.78 Cr"
-            details="2, 3 BHK Apartments"
-          />
-
-        </div>
-        {/* listing results for offer, sale and rent */}
-
-
-        <div className="max-w-6xl mx-auto px-4 flex flex-col gap-8 my-10">
-          {/* Recent Offers */}
-          {offerListings && offerListings.length > 0 && (
-            <div className="my-3">
-              <h2 className="text-5xl font-semibold text-slate-600">Featured Properties</h2><br />
-              <Link
-                className="text-sm text-blue-800 hover:underline"
-                to={'http://localhost:5173/search?offer=true'}
+        
+        <div className='bg-white rounded-2xl overflow-hidden shadow-xl'>
+          <div className='grid md:grid-cols-2'>
+            <div className='relative h-[300px] md:h-full'>
+              <img
+                src='https://firebasestorage.googleapis.com/v0/b/estate-ecommerce-app.appspot.com/o/1703695268787C.I-View-05.webp?alt=media&token=42604ca7-b1ad-4d5a-a65a-d1ebe1abb753'
+                alt='Kalpataru Vivant'
+                className='w-full h-full object-cover'
+              />
+            </div>
+            <div className='bg-[#0A0B2E] text-white p-8 flex flex-col justify-between'>
+              <div>
+                <h3 className='text-3xl font-bold mb-2'>Hubtown 25 South</h3>
+                <p className='text-gray-300 mb-4'>Andheri East, Western Suburbs, Mumbai</p>
+                <p className='text-[#FF5A3D] text-2xl font-bold mb-4'>2.45 Cr - 3.78 Cr</p>
+                <p className='text-xl mb-6'>2, 3 BHK Apartments</p>
+              </div>
+              <button
+                onClick={() => setIsContactPopupOpen(true)}
+                className='bg-[#FF5A3D] text-white px-8 py-3 rounded-lg hover:bg-opacity-90 transition-all text-lg font-semibold w-full md:w-auto'
               >
-                Show more offers
-              </Link><br />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-                <div
-                  className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
-                  key={'674af4e232db38e38d33e035'}
-                >
-                  <Link to={`/listing/${"674af4e232db38e38d33e035"}`}>
-                    <img
-                      src="https://imgur.com/CJ4efUk.jpg"
-                      className="rounded-t-lg w-full h-48 object-cover"
-                    />
-                  </Link>
-                  <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
-                    <h3 className="text-xl font-semibold">25 South</h3>
-                    <div className="flex items-center text-sm my-1">
-                      <FaMapMarkerAlt className="text-white mr-1" />
-                      <span className="text-gray-200">Prabhadevi, Mumbai</span>
-                    </div>
-                    <p className="text-gray-300 text-sm">25 South by The Wadhwa Group and Hubtown is a RERA-registered under-construction project in Prabhadevi, Mumbai, offering 3BHK and 4BHK apartments with possession by June 2028.</p>
-                    <div className="mt-4">
-                      <p className="text-3xl font-bold">Rs.10Cr</p>
-                      <p className="flex items-center text-sm">
-                        <FaMapMarkerAlt className="mr-1" />
-                        <span className="text-[#ff6a35]">Mumbai</span>
-                      </p>
-                    </div>
+                Contact
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      {/* Contact Popup */}
+      <ContactPopup
+        isOpen={isContactPopupOpen}
+        onClose={() => setIsContactPopupOpen(false)}
+      />
+      {/* listing results for offer, sale and rent */}
+
+
+      <div className="max-w-6xl mx-auto px-4 flex flex-col gap-8 my-10">
+        {/* Recent Offers */}
+        {offerListings && offerListings.length > 0 && (
+          <div className="my-3">
+            <h2 className="text-5xl font-semibold text-slate-600">Featured Properties</h2><br />
+            <Link
+              className="text-sm text-blue-800 hover:underline"
+              to={'http://localhost:5173/search?offer=true'}
+            >
+              Show more offers
+            </Link><br />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+              <div
+                className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
+                key={'674af66632db38e38d33e03a'}
+              >
+                <Link to={`/listing/${"674af66632db38e38d33e03a"}`}>
+                  <img
+                    src="https://imgur.com/KAqwILH.jpg"
+                    className="rounded-t-lg w-full h-48 object-cover"
+                  />
+                </Link>
+                <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
+                  <h3 className="text-xl font-semibold">25 West Hubtown</h3>
+                  <div className="flex items-center text-sm my-1">
+                    <FaMapMarkerAlt className="text-white mr-1" />
+                    <span className="text-gray-200">Bandra, Mumbai</span>
+                  </div>
+                  <p className="text-gray-300 text-sm">25 West by The Wadhwa Group and Hubtown is a RERA-registered under-construction project in Bandra, Mumbai, offering 4BHK and 5BHK apartments with possession by June 2028.</p>
+                  <div className="mt-4">
+                    <p className="text-3xl font-bold">Rs.10Cr+</p>
+                    <p className="flex items-center text-sm">
+                      <FaMapMarkerAlt className="mr-1" />
+                      <span className="text-[#ff6a35]">Mumbai</span>
+                    </p>
                   </div>
                 </div>
-                {/* <div
+              </div>
+              {/* <div
                     className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
                     key={listing._id}
                   >
@@ -348,213 +373,214 @@ export default function Home() {
                       </div>
                     </div>
                   </div> */}
-                <div
-                  className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
-                  key={'6749b1c62510d7520ed4edd7'}>
-                  <Link to={`/listing/${'6749b1c62510d7520ed4edd7'}`}>
-                    <img
-                      src='https://imgur.com/RXBbRyU.jpg'
-                      className="rounded-t-lg w-full h-48 object-cover"
-                    />
-                  </Link>
-                  <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
-                    <h3 className="text-xl font-semibold">Aaradhya Avaan</h3>
-                    <div className="flex items-center text-sm my-1">
-                      <FaMapMarkerAlt className="text-white mr-1" />
-                      <span className="text-gray-200">Aaradhya Avaan</span>
-                    </div>
-                    <p className="text-gray-300 text-sm">MICL Aaradhya Avaan by MICL is a  luxury under-construction project in Tardeo, Mumbai, featuring 3 towers with 61 floors and exclusive designer residences, set for possession in December 2030.</p>
-                    <div className="mt-4">
-                      <p className="text-3xl font-bold">Rs.9Cr</p>
-                      <p className="flex items-center text-sm">
-                        <FaMapMarkerAlt className="mr-1" />
-                        <span className="text-[#ff6a35]">Mumbai</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
-                  key={'674af4e232db38e38d33e035'}
-                >
-                  <Link to={`/listing/${"674af4e232db38e38d33e035"}`}>
-                    <img
-                      src="https://imgur.com/CJ4efUk.jpg"
-                      className="rounded-t-lg w-full h-48 object-cover"
-                    />
-                  </Link>
-                  <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
-                    <h3 className="text-xl font-semibold">25 South</h3>
-                    <div className="flex items-center text-sm my-1">
-                      <FaMapMarkerAlt className="text-white mr-1" />
-                      <span className="text-gray-200">Prabhadevi, Mumbai</span>
-                    </div>
-                    <p className="text-gray-300 text-sm">25 South by The Wadhwa Group and Hubtown is a RERA-registered under-construction project in Prabhadevi, Mumbai, offering 3BHK and 4BHK apartments with possession by June 2028.</p>
-                    <div className="mt-4">
-                      <p className="text-3xl font-bold">Rs.10Cr</p>
-                      <p className="flex items-center text-sm">
-                        <FaMapMarkerAlt className="mr-1" />
-                        <span className="text-[#ff6a35]">Mumbai</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Under Construction */}
-          {offerListings && offerListings.length > 0 && (
-            <div className="my-3">
-              <h2 className="text-5xl font-semibold text-slate-600">Featured Developers</h2><br />
-              <br /><br />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
-                <div
-                  className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                  {/* Circular Image */}
-                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
-                    
-                    <img
-      src="https://imgur.com/W7BJORU.jpg" // Actual Runwal image URL
-      alt="Lodha"
-      className="w-full h-full object-fill" // Updated to "object-fill" to ensure the image fills the circle
-    />
-                  </div>
-                  {/* Card Content */}
-                  <div className="p-5 mt-12">
-                    <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
-                      Lodha
-                    </h3>
-                    <div className="flex items-center justify-center text-sm mt-2">
-                      <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
-                      <span className="text-gray-500">Kolshet Road </span>
-                    </div>
-                    <p className="text-gray-600 text-sm mt-2 text-center"> Premium homes with world-class amenities and breathtaking views.</p>
-                    <div className="mt-4 flex justify-between items-center">
-                      {/* <p className="text-3xl font-bold text-[#ff6a35]">${listing.cost}</p> */}
-                      <p className="flex items-center text-sm text-[#ff6a35]">
-                        <FaMapMarkerAlt className="mr-1" />
-                        <span>Thane</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-  className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-  {/* Circular Image */}
-  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
-    <img
-      src="https://imgur.com/8pfGsPW.jpg" // Replace with actual Piramal image URL
-      alt="Piramal"
-      className="w-full h-full object-fill"
-    />
-  </div>
-  {/* Card Content */}
-  <div className="p-5 mt-12">
-    <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
-      Piramal
-    </h3>
-    <div className="flex items-center justify-center text-sm mt-2">
-      <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
-      <span className="text-gray-500">Lower Parel</span>
-    </div>
-    <p className="text-gray-600 text-sm mt-2 text-center">Luxury residences that redefine modern living in Mumbai.</p>
-    <div className="mt-4 flex justify-between items-center">
-      <p className="flex items-center text-sm text-[#ff6a35]">
-        <FaMapMarkerAlt className="mr-1" />
-        <span>Mumbai</span>
-      </p>
-    </div>
-  </div>
-</div>
-<div
-  className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-  {/* Circular Image */}
-  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
-    <img
-      src="https://imgur.com/DAFwUtm.jpg" // Replace with actual Runwal image URL
-      alt="Runwal"
-      className="w-full h-full object-fill"
-    />
-  </div>
-  {/* Card Content */}
-  <div className="p-5 mt-12">
-    <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
-      Runwal
-    </h3>
-    <div className="flex items-center justify-center text-sm mt-2">
-      <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
-      <span className="text-gray-500">Mulund West</span>
-    </div>
-    <p className="text-gray-600 text-sm mt-2 text-center">Affordable yet stylish homes in a vibrant community.</p>
-    <div className="mt-4 flex justify-between items-center">
-      <p className="flex items-center text-sm text-[#ff6a35]">
-        <FaMapMarkerAlt className="mr-1" />
-        <span>Mumbai</span>
-      </p>
-    </div>
-  </div>
-</div>
-
-
-              </div>
-            </div>
-          )}
-          <h2 className='text-slate-600 text-5xl font-semibold'>
-            Latest News and Articles
-          </h2>
-          <div id="news-section" className="w-full bg-gray-100 py-8 rounded-lg">
-            <div className="container mx-auto relative">
-              {/* Carousel Wrapper */}
               <div
-                ref={carouselRef}
-                className="carousel flex overflow-x-auto snap-x snap-mandatory px-4  "
-                style={{
-                  scrollbarWidth: "none",
-                  WebkitOverflowScrolling: "touch",
-                }}
-              >
-                {slides.map((slide, index) => (
-                  <div
-                    key={index}
-                    className="snap-center shrink-0 w-full md:w-1/3 px-4"
-                  >
-                    <img
-                      src={slide.img}
-                      alt={`Slide ${index + 1}`}
-                      className="w-full h-64 object-cover rounded-md"
-                    />
-                    <h3 className="mt-4 text-xl font-bold text-gray-800">
-                      {slide.heading}
-                    </h3>
-                    <p className="mt-2 text-gray-600">{slide.description}</p>
+                className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
+                key={'6749b1c62510d7520ed4edd7'}>
+                <Link to={`/listing/${'6749b1c62510d7520ed4edd7'}`}>
+                  <img
+                    src='https://imgur.com/RXBbRyU.jpg'
+                    className="rounded-t-lg w-full h-48 object-cover"
+                  />
+                </Link>
+                <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
+                  <h3 className="text-xl font-semibold">Aaradhya Avaan</h3>
+                  <div className="flex items-center text-sm my-1">
+                    <FaMapMarkerAlt className="text-white mr-1" />
+                    <span className="text-gray-200">Aaradhya Avaan</span>
                   </div>
-                ))}
+                  <p className="text-gray-300 text-sm">MICL Aaradhya Avaan by MICL is a  luxury under-construction project in Tardeo, Mumbai, featuring 3 towers with 61 floors and exclusive designer residences, set for possession in December 2030.</p>
+                  <div className="mt-4">
+                    <p className="text-3xl font-bold">Rs.9Cr</p>
+                    <p className="flex items-center text-sm">
+                      <FaMapMarkerAlt className="mr-1" />
+                      <span className="text-[#ff6a35]">Mumbai</span>
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              {/* Carousel Navigation Buttons */}
-              <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
-                <button
-                  className="p-2 bg-gray-300 rounded-full"
-                  onClick={() => scrollCarousel(-1)}
-                >
-                  <FaArrowLeft />
-                </button>
-              </div>
-              <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
-                <button
-                  className="p-2 bg-gray-300 rounded-full"
-                  onClick={() => scrollCarousel(1)}
-                >
-                  <FaArrowRight />
-                </button>
+              <div
+                className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
+                key={'67549987e73b6db2d2307212'}
+              >
+                <Link to={`/listing/${"67549987e73b6db2d2307212"}`}>
+                  <img
+                    src="https://imgur.com/01h0ftH.jpg"
+                    className="rounded-t-lg w-full h-48 object-cover"
+                  />
+                </Link>
+                <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
+                  <h3 className="text-xl font-semibold">Ruparel Jewel</h3>
+                  <div className="flex items-center text-sm my-1">
+                    <FaMapMarkerAlt className="text-white mr-1" />
+                    <span className="text-gray-200">Parel, Mumbai</span>
+                  </div>
+                  <p className="text-gray-300 text-sm">Ruparel Jewel by Ruparel Realty is an under-construction project in Parel, Mumbai, offering
+                  luxury with the blend of elegance and exclusivity ensuring comfort and well-being to its owners.</p>
+                  <div className="mt-4">
+                    <p className="text-3xl font-bold">Rs.7.25Cr+</p>
+                    <p className="flex items-center text-sm">
+                      <FaMapMarkerAlt className="mr-1" />
+                      <span className="text-[#ff6a35]">Mumbai</span>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        )}
+
+        {/* Under Construction */}
+        {offerListings && offerListings.length > 0 && (
+          <div className="my-3">
+            <h2 className="text-5xl font-semibold text-slate-600">Featured Developers</h2><br />
+            <br /><br />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
+              <div
+                className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                {/* Circular Image */}
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
+
+                  <img
+                    src="https://imgur.com/W7BJORU.jpg" // Actual Runwal image URL
+                    alt="Lodha"
+                    className="w-full h-full object-fill" // Updated to "object-fill" to ensure the image fills the circle
+                  />
+                </div>
+                {/* Card Content */}
+                <div className="p-5 mt-12">
+                  <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
+                    Lodha
+                  </h3>
+                  <div className="flex items-center justify-center text-sm mt-2">
+                    <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
+                    <span className="text-gray-500">Kolshet Road </span>
+                  </div>
+                  <p className="text-gray-600 text-sm mt-2 text-center"> Premium homes with world-class amenities and breathtaking views.</p>
+                  <div className="mt-4 flex justify-between items-center">
+                    {/* <p className="text-3xl font-bold text-[#ff6a35]">${listing.cost}</p> */}
+                    <p className="flex items-center text-sm text-[#ff6a35]">
+                      <FaMapMarkerAlt className="mr-1" />
+                      <span>Thane</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                {/* Circular Image */}
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
+                  <img
+                    src="https://imgur.com/8pfGsPW.jpg" // Replace with actual Piramal image URL
+                    alt="Piramal"
+                    className="w-full h-full object-fill"
+                  />
+                </div>
+                {/* Card Content */}
+                <div className="p-5 mt-12">
+                  <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
+                    Piramal
+                  </h3>
+                  <div className="flex items-center justify-center text-sm mt-2">
+                    <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
+                    <span className="text-gray-500">Lower Parel</span>
+                  </div>
+                  <p className="text-gray-600 text-sm mt-2 text-center">Luxury residences that redefine modern living in Mumbai.</p>
+                  <div className="mt-4 flex justify-between items-center">
+                    <p className="flex items-center text-sm text-[#ff6a35]">
+                      <FaMapMarkerAlt className="mr-1" />
+                      <span>Mumbai</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                {/* Circular Image */}
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
+                  <img
+                    src="https://imgur.com/DAFwUtm.jpg" // Replace with actual Runwal image URL
+                    alt="Runwal"
+                    className="w-full h-full object-fill"
+                  />
+                </div>
+                {/* Card Content */}
+                <div className="p-5 mt-12">
+                  <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
+                    Runwal
+                  </h3>
+                  <div className="flex items-center justify-center text-sm mt-2">
+                    <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
+                    <span className="text-gray-500">Mulund West</span>
+                  </div>
+                  <p className="text-gray-600 text-sm mt-2 text-center">Affordable yet stylish homes in a vibrant community.</p>
+                  <div className="mt-4 flex justify-between items-center">
+                    <p className="flex items-center text-sm text-[#ff6a35]">
+                      <FaMapMarkerAlt className="mr-1" />
+                      <span>Mumbai</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        )}
+        <h2 className='text-slate-600 text-5xl font-semibold'>
+          Latest News and Articles
+        </h2>
+        <div id="news-section" className="w-full bg-gray-100 py-8 rounded-lg">
+          <div className="container mx-auto relative">
+            {/* Carousel Wrapper */}
+            <div
+              ref={carouselRef}
+              className="carousel flex overflow-x-auto snap-x snap-mandatory px-4  "
+              style={{
+                scrollbarWidth: "none",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {slides.map((slide, index) => (
+                <div
+                  key={index}
+                  className="snap-center shrink-0 w-full md:w-1/3 px-4"
+                >
+                  <img
+                    src={slide.img}
+                    alt={`Slide ${index + 1}`}
+                    className="w-full h-64 object-cover rounded-md"
+                  />
+                  <h3 className="mt-4 text-xl font-bold text-gray-800">
+                    {slide.heading}
+                  </h3>
+                  <p className="mt-2 text-gray-600">{slide.description}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Carousel Navigation Buttons */}
+            <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
+              <button
+                className="p-2 bg-gray-300 rounded-full"
+                onClick={() => scrollCarousel(-1)}
+              >
+                <FaArrowLeft />
+              </button>
+            </div>
+            <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
+              <button
+                className="p-2 bg-gray-300 rounded-full"
+                onClick={() => scrollCarousel(1)}
+              >
+                <FaArrowRight />
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
 
 
-        {/* <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
+      {/* <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
           {offerListings && offerListings.length > 0 && (
             <div className=''>
               <div className='my-3'>
@@ -610,7 +636,6 @@ export default function Home() {
             </div>
           )}
         </div> */}
-      </div>
       <div className='bg-blue-100'></div>
       <Footer />
     </>
