@@ -383,7 +383,7 @@ export default function Home() {
                   />
                 </Link>
                 <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
-                  <h3 className="text-xl font-semibold">Aaradhya Avaan</h3>
+                  <h3 className="text-xl font-semibold">Aaradhya Avaan By MICL</h3>
                   <div className="flex items-center text-sm my-1">
                     <FaMapMarkerAlt className="text-white mr-1" />
                     <span className="text-gray-200">Aaradhya Avaan</span>
