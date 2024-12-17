@@ -110,14 +110,14 @@ export default function Home() {
             </div>
             <div className='block md:hidden w-full max-w-md mx-auto'>
               <img 
-                src='/src/assets/hero.png' 
+                src='/assets/Hero.png' 
                 alt='Real Estate'
                 className='w-full h-auto'
               />
             </div>
             <div className='hidden md:block'>
               <img 
-                src='/src/assets/hero.png' 
+                src='/assets/Hero.png' 
                 alt='Real Estate'
                 className='w-full h-auto'
               />
