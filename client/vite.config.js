@@ -6,11 +6,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000/saurabh-estate-app.azurewebsites.net',
+        target: 'http://localhost:3000',
         secure: false,
       },
     },
   },
-
   plugins: [react()],
 });

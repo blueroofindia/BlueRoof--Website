@@ -1,342 +1,291 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ListingItem from '../components/ListingItem';
-import { useLocation } from 'react-router-dom';
-import Footer from './footer.jsx'
+import { FaSearch, FaFilter, FaSort } from 'react-icons/fa';
 
 export default function Search() {
-  const location = useLocation();
   const navigate = useNavigate();
   const [sidebardata, setSidebardata] = useState({
     searchTerm: '',
-    region: '',
-    city: '',
-    bedrooms: '',
-    price: '',
-    offer: '',
-    cost:''
+    type: 'all',
+    parking: false,
+    furnished: false,
+    offer: false,
+    sort: 'created_at',
+    order: 'desc',
   });
 
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
   const [showMore, setShowMore] = useState(false);
-  const [priceOptions, setPriceOptions] = useState([]);
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    const typeFromUrl = urlParams.get('type');
+    const parkingFromUrl = urlParams.get('parking');
+    const furnishedFromUrl = urlParams.get('furnished');
+    const offerFromUrl = urlParams.get('offer');
+    const sortFromUrl = urlParams.get('sort');
+    const orderFromUrl = urlParams.get('order');
 
-    const formatPrice = (price) => {
-      if (price >= 10000000) {
-        return `${(price / 10000000).toFixed(1)} Cr`; 
-      } else if (price >= 100000) {
-        return `${(price / 100000).toFixed(1)} L`; 
-      }
-      return price; 
-    };
-    
-    setSidebardata({
-      searchTerm: urlParams.get('searchTerm') || '',
-      region: urlParams.get('region') || '',
-      city: urlParams.get('city') || '',
-      bedrooms: urlParams.get('bedrooms') || '',
-      price: urlParams.get('price') || '',
-      offer: urlParams.get('offer') || '', 
-      cost:urlParams.get('cost')||''
-    });
-  
+    if (
+      searchTermFromUrl ||
+      typeFromUrl ||
+      parkingFromUrl ||
+      furnishedFromUrl ||
+      offerFromUrl ||
+      sortFromUrl ||
+      orderFromUrl
+    ) {
+      setSidebardata({
+        searchTerm: searchTermFromUrl || '',
+        type: typeFromUrl || 'all',
+        parking: parkingFromUrl === 'true' ? true : false,
+        furnished: furnishedFromUrl === 'true' ? true : false,
+        offer: offerFromUrl === 'true' ? true : false,
+        sort: sortFromUrl || 'created_at',
+        order: orderFromUrl || 'desc',
+      });
+    }
 
     const fetchListings = async () => {
-      try {
-        setLoading(true);
+      setLoading(true);
+      setShowMore(false);
+      const searchQuery = urlParams.toString();
+      const res = await fetch(`/api/listing/get?${searchQuery}`);
+      const data = await res.json();
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
         setShowMore(false);
-
-        const query = new URLSearchParams(location.search).toString();  
-        const res = await fetch(`https://ecommerce-properties-seller.onrender.com/api/listing/get?${query}`, {
-          method: 'GET',
-        });
-
-        if (!res.ok) throw new Error('Failed to fetch listings');
-        const data = await res.json();
-
-        const uniqueCosts = [
-          ...new Set(data.map((listing) => listing.price)),
-        ].map(price => {
-          return {
-            rawPrice: price, // store raw price for filtering
-            formattedPrice: formatPrice(price) // store formatted price for display
-          };
-        }).sort((a, b) => a.rawPrice - b.rawPrice);
-        
-        setPriceOptions(uniqueCosts);
-
-        const filteredListings = data.filter((listing) => {
-          const costRange = listing.cost.includes('-')
-            ? listing.cost.split('-').map((value) => {
-                const trimmed = value.trim();
-                if (trimmed.endsWith('L')) {
-                  return parseInt(trimmed.replace('L', ''), 10) * 100000; 
-                } else if (trimmed.endsWith('Cr')) {
-                  return parseInt(trimmed.replace('Cr', ''), 10) * 10000000; 
-                }
-                return parseInt(trimmed, 10); // Default numeric value
-              })
-            : listing.cost.endsWith('+')
-            ? [
-                parseInt(
-                  listing.cost
-                    .replace('L+', '')
-                    .replace('Cr+', '')
-                    .trim(),
-                  10
-                ) * (listing.cost.includes('Cr') ? 10000000 : 100000), // Handle open-ended costs
-                Infinity, // Open-ended range
-              ]
-            : [
-                parseInt(
-                  listing.cost
-                    .replace('L', '')
-                    .replace('Cr', '')
-                    .trim(),
-                  10
-                ) * (listing.cost.includes('Cr') ? 10000000 : 100000),
-              ];
-        
-          const costIsValid = sidebardata.cost
-            ? (costRange.length === 2
-                ? parseInt(sidebardata.cost, 10) >= costRange[0] && parseInt(sidebardata.cost, 10) <= costRange[1]
-                : parseInt(sidebardata.cost, 10) === costRange[0])
-            : true;
-        
-          const searchTermIsValid = sidebardata.searchTerm
-            ? listing.name.toLowerCase().includes(sidebardata.searchTerm.toLowerCase())
-            : true;
-        
-          const regionIsValid = sidebardata.region
-            ? listing.region === sidebardata.region
-            : true;
-        
-          const cityIsValid = sidebardata.city
-            ? listing.city === sidebardata.city
-            : true;
-        
-          const bedroomsIsValid = sidebardata.bedrooms
-            ? listing.bedrooms.includes(sidebardata.bedrooms)
-            : true;
-        
-          const offerIsValid = sidebardata.offer
-            ? listing.offer === (sidebardata.offer === 'true')
-            : true;
-        
-          return (
-            costIsValid &&
-            searchTermIsValid &&
-            regionIsValid &&
-            cityIsValid &&
-            bedroomsIsValid &&
-            offerIsValid
-          );
-        });   
-
-        setShowMore(filteredListings.length > 8);
-    setListings(filteredListings);
-      } catch (error) {
-        console.error('Error fetching listings:', error);
-        setListings([]);
-      } finally {
-        setLoading(false);
       }
+      setListings(data);
+      setLoading(false);
     };
 
     fetchListings();
-  }, [location.search]); 
+  }, [location.search]);
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setSidebardata((prev) => ({ ...prev, [id]: value }));
+    if (
+      e.target.id === 'all' ||
+      e.target.id === 'rent' ||
+      e.target.id === 'sale'
+    ) {
+      setSidebardata({ ...sidebardata, type: e.target.id });
+    }
+
+    if (e.target.id === 'searchTerm') {
+      setSidebardata({ ...sidebardata, searchTerm: e.target.value });
+    }
+
+    if (
+      e.target.id === 'parking' ||
+      e.target.id === 'furnished' ||
+      e.target.id === 'offer'
+    ) {
+      setSidebardata({
+        ...sidebardata,
+        [e.target.id]:
+          e.target.checked || e.target.checked === 'true' ? true : false,
+      });
+    }
+
+    if (e.target.id === 'sort_order') {
+      const sort = e.target.value.split('_')[0] || 'created_at';
+      const order = e.target.value.split('_')[1] || 'desc';
+
+      setSidebardata({ ...sidebardata, sort, order });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams();
+    urlParams.set('searchTerm', sidebardata.searchTerm);
+    urlParams.set('type', sidebardata.type);
+    urlParams.set('parking', sidebardata.parking);
+    urlParams.set('furnished', sidebardata.furnished);
+    urlParams.set('offer', sidebardata.offer);
+    urlParams.set('sort', sidebardata.sort);
+    urlParams.set('order', sidebardata.order);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
 
-    if (sidebardata.searchTerm.trim()) urlParams.set('searchTerm', sidebardata.searchTerm.trim());
-    if (sidebardata.region.trim()) urlParams.set('region', sidebardata.region.trim());
-    if (sidebardata.city.trim()) urlParams.set('city', sidebardata.city.trim());
-    if (sidebardata.bedrooms.trim()) urlParams.set('bedrooms', sidebardata.bedrooms.trim()); // No change here
-    if (sidebardata.price.trim()) urlParams.set('price', sidebardata.price.trim());
-    if (sidebardata.cost.trim()) urlParams.set('cost', sidebardata.cost.trim());
-    if (sidebardata.offer) urlParams.set('offer', sidebardata.offer);
-
-    navigate(`/search?${urlParams.toString()}`);
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('startIndex', startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setListings([...listings, ...data]);
   };
 
   return (
-    <>
-    <div className="p-7">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-6">
-        {/* Search Bar */}
-        <div className="flex-1 mb-4">
-          <input
-            type="text"
-            id="searchTerm"
-            placeholder="Search..."
-            className="border rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-[#ff6a35]"
-            value={sidebardata.searchTerm}
-            onChange={handleChange}
-            style={{
-              borderColor: '#0a0a40',
-              color: '#0a0a40',
-            }}
-          />
-        </div>
-
-        {/* Inline Filters */}
-        <div className="flex flex-wrap gap-4">
-          {/* Region Filter */}
-          <div className="flex-1">
-            <select
-              id="region"
-              value={sidebardata.region}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-[#ff6a35]"
-              style={{
-                borderColor: '#0a0a40',
-                color: '#0a0a40',
-              }}
-            >
-              <option value="">Select Region</option>
-              {listings
-      .map((listing) => listing.region)  // Extract region from each listing
-      .filter((value, index, self) => self.indexOf(value) === index)  // Ensure uniqueness
-      .map((region, index) => (
-        <option key={index} value={region}>
-          {region}
-        </option>
-      ))}
-            </select>
-          </div>
-
-          {/* City Filter */}
-          <div className="flex-1">
-            <select
-              id="city"
-              value={sidebardata.city}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-[#ff6a35]"
-              style={{
-                borderColor: '#0a0a40',
-                color: '#0a0a40',
-              }}
-            >
-              <option value="">Select Location</option>
-              {listings
-      .map((listing) => listing.city)  // Extract city from each listing
-      .filter((value, index, self) => self.indexOf(value) === index)  // Ensure uniqueness
-      .map((city, index) => (
-        <option key={index} value={city}>
-          {city}
-        </option>
-      ))}
-              </select>
-          </div>
-
-          {/* Property Type Filter */}
-          <div className="flex-1">
-            <select
-              id="bedrooms"
-              value={sidebardata.bedrooms}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-[#ff6a35]"
-              style={{
-                borderColor: '#0a0a40',
-                color: '#0a0a40',
-              }}
-            >
-              <option value="">Select Property Type</option>
-              <option value="1 BHK">1 BHK</option>
-              <option value="2 BHK">2 BHK</option>
-              <option value="2.5 BHK">2.5 BHK</option>
-              <option value="3 BHK">3 BHK</option>
-              <option value="4 BHK">4 BHK</option>
-              <option value="5 BHK">5 BHK</option>
-              <option value="Penthouse">Penthouse</option>
-            </select>
-          </div>
-
-          {/* Cost Filter */}
-          <div className="flex-1">
-            <select
-              id="cost"
-              value={sidebardata.cost}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-[#ff6a35]"
-              style={{
-                borderColor: '#0a0a40',
-                color: '#0a0a40',
-              }}
-            >
-              <option value="">Select Cost</option>
-              {priceOptions.map((option, index) => (
-    <option key={index} value={option.rawPrice}>
-      {option.formattedPrice}
-    </option>
-  ))}
-            </select>
-          </div>
-
-          {/* Submit Button */}
-          <div>
+    <div className='flex flex-col min-h-screen bg-gray-50'>
+      {/* Search Header */}
+      <div className='bg-gradient-to-r from-blue-600 to-blue-800 py-8'>
+        <div className='max-w-6xl mx-auto px-4'>
+          <h1 className='text-3xl font-bold text-white mb-6'>Find Your Perfect Property</h1>
+          <form onSubmit={handleSubmit} className='flex gap-4 flex-wrap items-center'>
+            <div className='flex-1 min-w-[300px]'>
+              <div className='relative'>
+                <FaSearch className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' />
+                <input
+                  type='text'
+                  id='searchTerm'
+                  placeholder='Search by location, property type...'
+                  className='w-full pl-10 pr-4 py-3 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400'
+                  value={sidebardata.searchTerm}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
             <button
-              type="submit"
-              className="bg-[#ff6a35] text-white p-3 rounded-lg uppercase hover:bg-[#e65c2f]"
-              style={{
-                color: 'white',
-              }}
+              type='button'
+              onClick={() => setShowFilters(!showFilters)}
+              className='px-4 py-3 bg-white text-blue-600 rounded-lg flex items-center gap-2 hover:bg-blue-50 transition'
+            >
+              <FaFilter />
+              Filters
+            </button>
+            <button
+              type='submit'
+              className='px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition'
             >
               Search
             </button>
-          </div>
-        </div>
-      </form>
-
-      {/* Listings Section */}
-      <div>
-        <h1 className="text-3xl font-semibold mb-4">
-          {listings.length > 0
-            ? `${listings.length} Listing${listings.length > 1 ? 's' : ''} Found`
-            : 'No Listings Found'}
-        </h1>
-        <div className="flex flex-wrap gap-4">
-          {loading ? (
-            <p className="text-xl text-[#0a0a40] text-center w-full">Loading...</p>
-          ) : listings.length === 0 ? (
-            <p className="text-xl text-[#0a0a40]">No listings match your criteria.</p>
-          ) : (
-            listings.map((listing) => <ListingItem key={listing._id} listing={listing} />)
-          )}
-          {showMore && (
-            <button
-              onClick={() => {
-                const urlParams = new URLSearchParams(location.search);
-                urlParams.set('startIndex', listings.length);
-                fetch(`https://ecommerce-properties-seller.onrender.com/api/listing/get?${urlParams.toString()}`)
-                  .then((res) => res.json())
-                  .then((data) => {
-                    setListings((prev) => [...prev, ...data]);
-                    setShowMore(false);
-                  });
-              }}
-              className="text-[#ff6a35] hover:underline mt-4"
-            >
-              Load More
-            </button>
-          )}
+          </form>
         </div>
       </div>
-      
+
+      <div className='flex-1 max-w-6xl mx-auto w-full px-4 py-8'>
+        <div className='flex flex-col md:flex-row gap-8'>
+          {/* Filters */}
+          <div className={`md:w-72 ${showFilters ? 'block' : 'hidden md:block'}`}>
+            <div className='bg-white p-6 rounded-xl shadow-sm'>
+              <div className='mb-6'>
+                <h3 className='text-lg font-semibold mb-4 flex items-center gap-2'>
+                  <FaSort />
+                  Sort By
+                </h3>
+                <select
+                  id='sort_order'
+                  className='w-full p-3 border rounded-lg'
+                  onChange={handleChange}
+                  defaultValue={`${sidebardata.sort}_${sidebardata.order}`}
+                >
+                  <option value='regularPrice_desc'>Price high to low</option>
+                  <option value='regularPrice_asc'>Price low to high</option>
+                  <option value='createdAt_desc'>Latest</option>
+                  <option value='createdAt_asc'>Oldest</option>
+                </select>
+              </div>
+
+              <div className='mb-6'>
+                <h3 className='text-lg font-semibold mb-4'>Property Type</h3>
+                <div className='flex gap-4'>
+                  <label className='flex items-center gap-2 cursor-pointer'>
+                    <input
+                      type='checkbox'
+                      id='all'
+                      className='w-5 h-5 text-blue-600'
+                      onChange={handleChange}
+                      checked={sidebardata.type === 'all'}
+                    />
+                    <span>All</span>
+                  </label>
+                  <label className='flex items-center gap-2 cursor-pointer'>
+                    <input
+                      type='checkbox'
+                      id='rent'
+                      className='w-5 h-5 text-blue-600'
+                      onChange={handleChange}
+                      checked={sidebardata.type === 'rent'}
+                    />
+                    <span>Rent</span>
+                  </label>
+                  <label className='flex items-center gap-2 cursor-pointer'>
+                    <input
+                      type='checkbox'
+                      id='sale'
+                      className='w-5 h-5 text-blue-600'
+                      onChange={handleChange}
+                      checked={sidebardata.type === 'sale'}
+                    />
+                    <span>Sale</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className='space-y-4'>
+                <label className='flex items-center gap-2 cursor-pointer'>
+                  <input
+                    type='checkbox'
+                    id='offer'
+                    className='w-5 h-5 text-blue-600'
+                    onChange={handleChange}
+                    checked={sidebardata.offer}
+                  />
+                  <span>Offer</span>
+                </label>
+                <label className='flex items-center gap-2 cursor-pointer'>
+                  <input
+                    type='checkbox'
+                    id='parking'
+                    className='w-5 h-5 text-blue-600'
+                    onChange={handleChange}
+                    checked={sidebardata.parking}
+                  />
+                  <span>Parking</span>
+                </label>
+                <label className='flex items-center gap-2 cursor-pointer'>
+                  <input
+                    type='checkbox'
+                    id='furnished'
+                    className='w-5 h-5 text-blue-600'
+                    onChange={handleChange}
+                    checked={sidebardata.furnished}
+                  />
+                  <span>Furnished</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Results */}
+          <div className='flex-1'>
+            <div className='mb-4'>
+              <h2 className='text-2xl font-semibold text-gray-900'>
+                {loading ? 'Loading...' : `${listings.length} Properties Found`}
+              </h2>
+            </div>
+
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+              {!loading && listings.map((listing) => (
+                <ListingItem key={listing._id} listing={listing} />
+              ))}
+            </div>
+
+            {showMore && (
+              <button
+                onClick={onShowMoreClick}
+                className='w-full py-3 text-blue-600 hover:text-blue-800 text-center mt-8'
+              >
+                Show more
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
-    <div className='bg-blue-100'></div>
-      <Footer />
-    </>
   );
 }

@@ -1,170 +1,172 @@
-import { FaWhatsapp, FaEnvelope, FaInstagram, FaBars, FaTimes } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import img1 from '../assets/logo-removebg-preview (1).png';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import ContactPopup from './ContactPopup';
 
 export default function Header() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('searchTerm', searchTerm);
-    const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
-  };
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl);
-    }
-  }, [location.search]);
-
-  const togglePopup = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
-
-  const toggleAboutPopup = () => {
-    setIsAboutPopupOpen(!isAboutPopupOpen);
-  };
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleTrendingClick = (e) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollToFeatured: true } });
+    } else {
+      document.getElementById('featured-properties')?.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (isMenuOpen) toggleMenu();
+  };
+
+  const handleNewsClick = (e) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollToNews: true } });
+    } else {
+      document.getElementById('news-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (isMenuOpen) toggleMenu();
+  };
+
   return (
-    <header className='shadow-md bg-gray-900'>
-      <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
-        <Link to='/'>
-          <img src={img1} alt='Company Logo' className='h-10' />
+    <header className='bg-[#1a1f3d] text-white relative'>
+      <div className='flex justify-between items-center max-w-7xl mx-auto p-4'>
+        <Link to='/' className='flex items-center gap-2 z-20'>
+          <img 
+            src="/assets/logo-removebg-preview (1).png" 
+            alt="BlueRoof India" 
+            className="h-8"
+          />
+          <span className='font-bold text-lg'></span>
         </Link>
-        <button
+
+        {/* Hamburger Menu Button */}
+        <button 
+          className='lg:hidden z-20 text-2xl'
           onClick={toggleMenu}
-          className='sm:hidden text-white focus:outline-none'
+          aria-label='Toggle menu'
         >
-          {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
-        <ul
-          className={`sm:flex hidden sm:flex-row sm:gap-4 sm:items-center`}
-        >
-          <Link to=''>
-            <li className='text-white hover:underline'>Trending</li>
+
+        {/* Desktop Navigation */}
+        <nav className='hidden lg:flex gap-8 items-center text-sm'>
+          <Link to='/' className='hover:text-[#FF5A3D] transition duration-300'>
+            Home
           </Link>
-          <li
-            className='text-white hover:underline cursor-pointer'
-            onClick={toggleAboutPopup}
+          <button 
+            onClick={handleTrendingClick}
+            className='hover:text-[#FF5A3D] transition duration-300'
           >
+            Trending Properties
+          </button>
+          <Link to='/about' className='hover:text-[#FF5A3D] transition duration-300'>
             About Us
-          </li>
-          <li
-            className='text-white hover:underline cursor-pointer'
-            onClick={togglePopup}
+          </Link>
+          <button 
+            className='text-white hover:text-[#FF5A3D] transition duration-300'
+            onClick={() => setIsContactPopupOpen(true)}
           >
             Post Property (Free)
-          </li>
-          <a href='../#news-section'>
-            <li className='text-white hover:underline'>News</li>
-          </a>
-          <Link to='/search?offer=true'>
-            <li className='text-white hover:underline'>Explore</li>
-          </Link>
-        </ul>
-      </div>
-
-      {/* Dropdown Menu for Mobile */}
-      {isMenuOpen && (
-        <div className='sm:hidden bg-gray-800 p-4 shadow-lg'>
-          <ul className='flex flex-col gap-3'>
-            <Link to=''>
-              <li className='text-white hover:underline'>Trending</li>
-            </Link>
-            <li
-              className='text-white hover:underline cursor-pointer'
-              onClick={toggleAboutPopup}
-            >
-              About Us
-            </li>
-            <li
-              className='text-white hover:underline cursor-pointer'
-              onClick={togglePopup}
-            >
-              Post Property (Free)
-            </li>
-            <a href='../#news-section'>
-              <li className='text-white hover:underline'>News</li>
-            </a>
-            <Link to='/search?offer=true'>
-              <li className='text-white hover:underline'>Explore</li>
-            </Link>
-          </ul>
-        </div>
-      )}
-
-      {/* Post Property Popup */}
-      {isPopupOpen && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-          <div
-            className='bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-sm sm:max-w-md lg:max-w-lg'
-            style={{ backgroundColor: '#0a0a40', position: 'relative' }}
+          </button>
+          <button 
+            onClick={handleNewsClick}
+            className='hover:text-[#FF5A3D] transition duration-300'
           >
-            <button
-              onClick={togglePopup}
-              className='absolute top-3 right-3 text-white'
-              style={{ background: 'none', border: 'none' }}
-            >
-              <FaTimes size={20} />
-            </button>
-            <h2 className='text-xl font-semibold text-white mb-4'>Get in Touch!</h2>
-            <div className='space-y-4'>
-              <button className='flex items-center justify-center w-full p-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white'>
-                <FaWhatsapp className='mr-2' />
-                WhatsApp
-              </button>
-              <button className='flex items-center justify-center w-full p-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white'>
-                <FaEnvelope className='mr-2' />
-                Gmail
-              </button>
-              <button className='flex items-center justify-center w-full p-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white'>
-                <FaInstagram className='mr-2' />
-                Instagram
+            News
+          </button>
+          <Link to='/explore' className='hover:text-[#FF5A3D] transition duration-300'>
+            Explore
+          </Link>
+        </nav>
+
+        {/* Mobile Navigation Overlay */}
+        <div 
+          className={`fixed inset-0 bg-black bg-opacity-50 z-10 lg:hidden transition-opacity duration-300 ${
+            isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+          onClick={toggleMenu}
+        />
+
+        {/* Mobile Navigation Menu */}
+        <div 
+          className={`
+            fixed top-0 right-0 h-screen w-[300px] bg-[#1a1f3d] z-20 lg:hidden
+            transform transition-transform duration-300 ease-in-out shadow-2xl
+            ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+          `}
+        >
+          <div className="flex flex-col h-full">
+            {/* Menu Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <span className="text-lg font-bold">Menu</span>
+              <button 
+                onClick={toggleMenu}
+                className="text-2xl text-gray-400 hover:text-white transition-colors"
+              >
+                <FaTimes />
               </button>
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* About Us Popup */}
-      {isAboutPopupOpen && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-          <div
-            className='bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-sm sm:max-w-md lg:max-w-lg'
-            style={{ backgroundColor: '#0a0a40', position: 'relative' }}
-          >
-            <button
-              onClick={toggleAboutPopup}
-              className='absolute top-3 right-3 text-white'
-              style={{ background: 'none', border: 'none' }}
-            >
-              <FaTimes size={20} />
-            </button>
-            <h2 className='text-xl font-semibold text-white mb-4'>About Us</h2>
-            <img src={img1} alt='Company Logo' className='h-10' />
-            <br />
-            <p className='text-white text-sm mb-4'>
-              Welcome to our platform! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo elit non dui volutpat, sed volutpat risus elementum. In hac habitasse platea dictumst.
-            </p>
-            <p className='text-white text-sm'>
-              Proin vehicula felis vel nulla egestas, vel vulputate nisi sodales. Nunc auctor mi et turpis pellentesque, eget scelerisque justo aliquet. Integer vehicula turpis nec semper pharetra.
-            </p>
+            {/* Menu Items */}
+            <nav className='flex flex-col p-4 gap-4'>
+              <Link 
+                to='/' 
+                className='py-3 px-4 hover:bg-[#FF5A3D] hover:bg-opacity-10 rounded-lg transition-colors flex items-center'
+                onClick={toggleMenu}
+              >
+                Home
+              </Link>
+              <button 
+                onClick={handleTrendingClick}
+                className='py-3 px-4 hover:bg-[#FF5A3D] hover:bg-opacity-10 rounded-lg transition-colors flex items-center text-left w-full'
+              >
+                Trending Properties
+              </button>
+              <Link 
+                to='/about' 
+                className='py-3 px-4 hover:bg-[#FF5A3D] hover:bg-opacity-10 rounded-lg transition-colors flex items-center'
+                onClick={toggleMenu}
+              >
+                About Us
+              </Link>
+              <button 
+                onClick={() => {
+                  setIsContactPopupOpen(true);
+                  toggleMenu();
+                }}
+                className='py-3 px-4 hover:bg-[#FF5A3D] hover:bg-opacity-10 rounded-lg transition-colors flex items-center text-left w-full'
+              >
+                Post Property (Free)
+              </button>
+              <button 
+                onClick={handleNewsClick}
+                className='py-3 px-4 hover:bg-[#FF5A3D] hover:bg-opacity-10 rounded-lg transition-colors flex items-center text-left w-full'
+              >
+                News
+              </button>
+              <Link 
+                to='/explore' 
+                className='py-3 px-4 hover:bg-[#FF5A3D] hover:bg-opacity-10 rounded-lg transition-colors flex items-center'
+                onClick={toggleMenu}
+              >
+                Explore
+              </Link>
+            </nav>
           </div>
         </div>
-      )}
+
+        {/* Contact Popup */}
+        <ContactPopup 
+          isOpen={isContactPopupOpen} 
+          onClose={() => setIsContactPopupOpen(false)} 
+        />
+      </div>
     </header>
   );
 }

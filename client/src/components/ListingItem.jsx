@@ -1,48 +1,83 @@
 import { Link } from 'react-router-dom';
-import { MdLocationOn } from 'react-icons/md';
-import { FaBed , FaBath } from 'react-icons/fa';
-import { FaLocationDot } from "react-icons/fa6";
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { useState } from 'react';
 
 export default function ListingItem({ listing }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const getPriceRange = () => {
+    const prices = Object.values(listing.regularPrice);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    
+    if (minPrice === maxPrice) {
+      return `₹${(minPrice / 10000000).toFixed(2)} Cr`;
+    }
+    return `₹${(minPrice / 10000000).toFixed(2)} - ${(maxPrice / 10000000).toFixed(2)} Cr`;
+  };
+
+  const truncateDescription = (text, maxLength = 150) => {
+    if (text.length <= maxLength) return text;
+    return isExpanded ? text : `${text.slice(0, maxLength)}...`;
+  };
+
   return (
-    <div className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
-      <Link to={`/listing/${listing._id}`}>
-        <img
-          src={
-            listing.imageUrls[0] ||
-            'https://53.fs1.hubspotusercontent-na1.net/hub/53/hubfs/Sales_Blog/real-estate-business-compressor.jpg?width=595&height=400&name=real-estate-business-compressor.jpg'
-          }
-          alt='listing cover'
-          className='h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'
-        />
-        <div className='p-3 flex flex-col gap-2 w-full items-center '>
-          <p className='truncate text-lg font-semibold text-black-1000'>
-            {listing.name}
-          </p>
-          <div className='flex items-center gap-1'>
-            <MdLocationOn className='h-4 w-4 text-green-700' />
-            <p className='text-sm text-gray-800 truncate w-full'>
-              {listing.address}
+    <Link 
+      to={`/property/${listing._id}`}
+      className="block w-full h-full"
+    >
+      <div className='bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full'>
+        <div className='relative w-full md:aspect-[4/3] aspect-[16/9]'>
+          <img
+            src={listing.imageUrls[0]}
+            alt={listing.name}
+            className='absolute inset-0 h-full w-full object-cover hover:scale-105 transition-transform duration-300'
+          />
+        </div>
+        <div className='p-3 sm:p-4'>
+          <h3 className='text-base sm:text-lg font-semibold truncate'>{listing.name}</h3>
+          <div className='flex items-center gap-1 text-gray-600 text-xs sm:text-sm mt-1'>
+            <FaMapMarkerAlt className='text-[#FF5A3D] flex-shrink-0' />
+            <p className='truncate'>{listing.address}</p>
+          </div>
+          
+          {/* Description with Read More */}
+          <div className='mt-2 mb-3'>
+            <p className='text-xs sm:text-sm text-gray-600'>
+              {truncateDescription(listing.description)}
+              {listing.description.length > 150 && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsExpanded(!isExpanded);
+                  }}
+                  className='text-[#FF5A3D] ml-1 hover:underline'
+                >
+                  {isExpanded ? 'Read Less' : 'Read More...'}
+                </button>
+              )}
             </p>
           </div>
-          <p className='text-sm text-gray-600 line-clamp-2'>
-            {listing.description}
-          </p>
-          <p className='text-slate-500 mt-2 font-semibold '>
-            Rs.
-            {listing.offer
-              ? listing.cost
-              : listing.regularPrice.toLocaleString('en-US')}
-            {listing.type === 'rent' && ' / month'}
-          </p>
-          <div className='text-slate-700 flex flex-row gap-3'>
-            <FaLocationDot className='text-lg  text-pink-700' />
-            <div className='font-bold text-xs'>
-              {listing.region}
-            </div>
+          
+          {/* Room Types */}
+          <div className='flex flex-wrap gap-2 mb-3'>
+            {listing.rooms.map(room => (
+              <span 
+                key={room}
+                className='text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600'
+              >
+                {room}
+              </span>
+            ))}
+          </div>
+
+          <div className='flex justify-between items-center gap-2'>
+            <p className='font-semibold text-[#FF5A3D] text-sm sm:text-base whitespace-nowrap'>
+              {getPriceRange()}
+            </p>
           </div>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }

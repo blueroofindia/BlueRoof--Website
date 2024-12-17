@@ -1,643 +1,401 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
-import image1 from '../assets/image1.jpg';
-import image2 from '../assets/image2.jpg';
-import image3 from '../assets/image3.jpg';
-import img1 from '../assets/image1.jpg';
-import img2 from '../assets/image1.jpg';
-import img3 from '../assets/image1.jpg';
-import hero from '../assets/House searching-bro(1).png';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import Card from './Card.jsx'; // Make sure to update the path
-import Footer from './footer.jsx'
-import { FaSearch } from 'react-icons/fa';
-import one from '../assets/img1.png'
-import two from '../assets/img2.jpg'
-import three from '../assets/img3.jpg'
-import four from '../assets/img4.jpg'
-import five from '../assets/img5.jpg'
-import six from '../assets/img6.jpg'
-import seven from '../assets/img7.jpg'
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaSearch, FaMapMarkerAlt, FaRegBuilding, FaHandshake } from 'react-icons/fa';
+import { BsHouseDoor, BsBuilding } from 'react-icons/bs';
+import Footer from '../components/Footer'; // Add Footer component import
 import ContactPopup from '../components/ContactPopup'; // Add ContactPopup component import
+import { featuredProperties } from '../data/featuredProperties';
 
 export default function Home() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-  const [underConstructionListings, setUnderConstructionListings] = useState([]);
-  const [nearingPossessionListings, setNearingPossessionListings] = useState([]);
-  const [readyToMoveListings, setReadyToMoveListings] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false); // Add state for ContactPopup
   SwiperCore.use([Navigation]);
-  console.log(offerListings);
-  const [searchTerm, setSearchTerm] = useState('');
-  const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  const handleSearch = (e) => {
     e.preventDefault();
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('searchTerm', searchTerm);
-    const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
+    if (searchTerm) {
+      navigate(`/explore?searchTerm=${encodeURIComponent(searchTerm)}`);
+    }
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl);
+    if (location.state?.scrollToFeatured) {
+      document.getElementById('featured-properties')?.scrollIntoView({ behavior: 'smooth' });
+      // Clear the state to prevent scrolling on subsequent renders
+      navigate('/', { replace: true, state: {} });
     }
-  }, [location.search]);
+  }, [location.state, navigate]);
 
   useEffect(() => {
-    const fetchOfferListings = async () => {
+    if (location.state?.scrollToNews) {
+      document.getElementById('news-section')?.scrollIntoView({ behavior: 'smooth' });
+      // Clear the state
+      navigate('/', { state: {}, replace: true });
+    }
+  }, [location.state?.scrollToNews, navigate]);
+
+  useEffect(() => {
+    const fetchListings = async () => {
       try {
-        const res = await fetch('https://ecommerce-properties-seller.onrender.com/api/listing/get?offer=true&limit=3');
-        const data = await res.json();
-        setOfferListings(data);
-        fetchRentListings();
+        const [offerRes, saleRes, rentRes] = await Promise.all([
+          fetch('/api/listing/get?offer=true&limit=4'),
+          fetch('/api/listing/get?type=sale&limit=4'),
+          fetch('/api/listing/get?type=rent&limit=4')
+        ]);
+
+        if (!offerRes.ok || !saleRes.ok || !rentRes.ok) {
+          console.error('Failed to fetch listings');
+          return;
+        }
+
+        const [offerData, saleData, rentData] = await Promise.all([
+          offerRes.json(),
+          saleRes.json(),
+          rentRes.json()
+        ]);
+
+        setOfferListings(offerData || []);
+        setSaleListings(saleData || []);
+        setRentListings(rentData || []);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching listings:', error);
       }
     };
 
-    const fetchUnderConstructionListings = async () => {
-      try {
-        const res = await fetch('https://ecommerce-properties-seller.onrender.com/api/listing/get?type=under%20construction&limit=3');
-        const data = await res.json();
-        setUnderConstructionListings(data);
-        fetchNearingPossessionListings();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const fetchNearingPossessionListings = async () => {
-      try {
-        const res = await fetch('https://ecommerce-properties-seller.onrender.com/api/listing/get?type=nearing%20possession&limit=3');
-        const data = await res.json();
-        setNearingPossessionListings(data);
-        fetchReadyToMoveListings();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const fetchReadyToMoveListings = async () => {
-      try {
-        const res = await fetch('https://ecommerce-properties-seller.onrender.com/api/listing/get?type=ready%20to%20move&limit=3');
-        const data = await res.json();
-        setReadyToMoveListings(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    // Initial call
-    fetchOfferListings();
-    fetchUnderConstructionListings();
-
+    fetchListings();
   }, []);
 
-  useEffect(() => {
-    const allListings = [...offerListings, ...saleListings, ...rentListings];
-    setUnderConstructionListings(allListings.filter(listing => listing.type === 'under construction'));
-    setNearingPossessionListings(allListings.filter(listing => listing.type === 'nearing possession'));
-    setReadyToMoveListings(allListings.filter(listing => listing.type === 'ready to move'));
-  }, [offerListings, saleListings, rentListings]);
-
-  const carouselRef = useRef(null);
-
-  const scrollCarousel = (direction) => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({
-        top: 0,
-        left: direction * carouselRef.current.clientWidth,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const slides = [
-    {
-      img: one,
-      heading: "Maharashtra issues special fire safety regulations",
-      description: "Maharashtra government on October 11, 2024 has issued final notifications to enforce fire safety norms for vulnerable buildings in Mumbai and Maharashtra.",
-    },
-    {
-      img: two,
-      heading: "Everything you want to know about Mukesh Ambani’s Antilia house",
-      description: "The Ambani house is the world’s most expensive biggest residential property.",
-    },
-    {
-      img: three,
-      heading: "Inside industrialist Anil Ambani’s house in Mumbai",
-      description: "Anil Ambani’s lavish home is counted among the most expensive homes in India. The 17-storey structure is situated at Pali Hill in Mumbai.",
-    },
-    {
-      img: four,
-      heading: "Inside Rohit Sharma’s lavish Mumbai house",
-      description: "Rohit Sharma house is on the 29th floor of Ahuja Towers, the imposing 53-storied building in Worli that has a gorgeous view of the Arabian Sea.",
-    },
-    {
-      img: five,
-      heading: "Residential sector records sale of 87,108 units in Q3 2024: Report",
-      description: "Among the top 8 Indian cities, Mumbai led with sales of 24,222 units in Q3 2024, making this the best recorded quarterly sales volume since 2018.",
-    },
-    {
-      img: six,
-      heading: "A look at industrialist late Ratan Tata’s House, Halekai in Mumbai",
-      description: "Know all about late Ratan Tata house in Mumbai that is worth Rs 150 crores and covers a mammoth 13,350 sq ft across three storeys.",
-    },
-    {
-      img: seven,
-      heading: "Bhunaksha Maharashtra: How to check DLRS Maharashtra map online?",
-      description: "Also known as Cadastral Maps, these DLRS Maharashtra map documents are important information that all new buyers should check, before signing any property deal.",
-    },
-  ];
-
-  const formatPrice = (price) => {
-    if (price >= 10000000) {
-      return `${(price / 10000000).toFixed(2)} Cr`;
-    } else if (price >= 100000) {
-      return `${(price / 100000).toFixed(2)} Lakh`;
-    } else {
-      return price.toLocaleString(); // Adds commas for readability (e.g., 90,000)
-    }
-  };
-
   return (
-    <>
-      <div>
-        {/* top */}
-        <div
-          className="flex flex-col lg:flex-row items-center gap-8 p-1 bg-cover bg-center max-w-6xl mx-auto px-4 my-10"
-          style={{
-            backgroundImage: 'url(https://storyset.com/images/stars.svg)',
-            fontFamily: 'Poppins, sans-serif',
-          }}
-        >
-          {/* Left Section - Text and Form */}
-          <div className="flex flex-col gap-4 max-w-lg lg:max-w-md text-center lg:text-left lg:mr-8">
-            <h1 className="text-6xl font-bold text-slate-800">
-              Crafted for those who seek the best
-            </h1>
-            <p className="text-lg text-slate-600">
-              Explore properties, projects, and locations to suit your lifestyle.
-            </p>
-            <div className="flex justify-center lg:justify-start">
-              <form
-                onSubmit={handleSubmit}
-                className="flex items-center p-3 bg-gradient-to-r from-blue-200 to-blue-300 rounded-2xl shadow-md"
-                style={{ maxWidth: '600px' }}
-              >
+    <div className="bg-[#F0F7FF]">
+      {/* Hero Section */}
+      <div className="relative bg-[#F0F7FF] pt-8 sm:pt-12 pb-8 sm:pb-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Text Content */}
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 capitalize">
+                Crafted For Those Who Seek The Best!
+              </h1>
+              <p className="text-lg text-gray-600 mb-8">
+                Explore Properties, Projects, And Locations To Suit Your Lifestyle. Find Your Perfect Home With BlueRoof.
+              </p>
+              
+              {/* Search Bar */}
+              <div className="relative max-w-md mx-auto sm:mx-0">
                 <input
                   type="text"
                   placeholder="Find your ideal property, project, or location..."
-                  className="bg-transparent focus:outline-none w-48 sm:w-96 px-2 text-slate-800 placeholder-gray-500"
+                  className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF5A3D] focus:border-transparent"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button type="submit" className="ml-2">
-                  <FaSearch className="text-slate-600 hover:text-slate-800 transition duration-200" />
+                <button
+                  type="submit"
+                  onClick={handleSearch}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#FF5A3D] text-white p-2 rounded-full hover:bg-[#FF4A2D] transition-colors"
+                >
+                  <FaSearch className="w-4 h-4" />
                 </button>
-              </form>
+              </div>
             </div>
-          </div>
-
-          {/* Right Section - Hero Image */}
-          <div className="w-full lg:w-1/2 mt-6 lg:mt-0">
-            <img
-              src={hero} // Replace with your hero image URL
-              alt="Hero"
-              className="w-full h-auto object-cover"
-            />
-          </div>
-        </div>
-
-        {/* swiper */}
-        {/* <Swiper navigation>
-      {offerListings &&
-        offerListings.length > 0 &&
-        offerListings.map((listing) => (
-          <SwiperSlide>
-            <div
-              style={{
-                background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                backgroundSize: 'cover',
-              }}
-              className='h-[500px]'
-              key={listing._id}
-            ></div>
-          </SwiperSlide>
-        ))}
-    </Swiper> */}
-        <Swiper navigation>
-          <SwiperSlide>
-            <div
-              style={{
-                background: `url("https://i.imgur.com/pgEiV0I.jpg") center no-repeat`,
-                backgroundSize: 'cover',
-              }}
-              className='h-[500px]'
-            ></div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div
-              style={{
-                background: `url(${image2}) center no-repeat`,
-                backgroundSize: 'cover',
-              }}
-              className='h-[500px]'
-            ></div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div
-              style={{
-                background: `url(${image3}) center no-repeat`,
-                backgroundSize: 'cover',
-              }}
-              className='h-[500px]'
-            ></div>
-          </SwiperSlide>
-        </Swiper>
-        <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10' style={{ marginBottom: 0 }}>
-          <div className='my-3'>
-            <h2 className='text-5xl font-semibold text-slate-600'>Signature property</h2><br />
-            <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=ready to move'}>Show more places ready to move</Link>
-          </div>
-        
-        <div className='bg-white rounded-2xl overflow-hidden shadow-xl'>
-          <div className='grid md:grid-cols-2'>
-            <div className='relative h-[300px] md:h-full'>
-              <img
-                src='https://firebasestorage.googleapis.com/v0/b/estate-ecommerce-app.appspot.com/o/1703695268787C.I-View-05.webp?alt=media&token=42604ca7-b1ad-4d5a-a65a-d1ebe1abb753'
-                alt='Kalpataru Vivant'
-                className='w-full h-full object-cover'
+            <div className='block md:hidden w-full max-w-md mx-auto'>
+              <img 
+                src='/src/assets/hero.png' 
+                alt='Real Estate'
+                className='w-full h-auto'
               />
             </div>
-            <div className='bg-[#0A0B2E] text-white p-8 flex flex-col justify-between'>
-              <div>
-                <h3 className='text-3xl font-bold mb-2'>Hubtown 25 South</h3>
-                <p className='text-gray-300 mb-4'>Andheri East, Western Suburbs, Mumbai</p>
-                <p className='text-[#FF5A3D] text-2xl font-bold mb-4'>2.45 Cr - 3.78 Cr</p>
-                <p className='text-xl mb-6'>2, 3 BHK Apartments</p>
-              </div>
-              <button
-                onClick={() => setIsContactPopupOpen(true)}
-                className='bg-[#FF5A3D] text-white px-8 py-3 rounded-lg hover:bg-opacity-90 transition-all text-lg font-semibold w-full md:w-auto'
-              >
-                Contact
-              </button>
+            <div className='hidden md:block'>
+              <img 
+                src='/src/assets/hero.png' 
+                alt='Real Estate'
+                className='w-full h-auto'
+              />
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Carousel Section */}
+      <div className='bg-[#F0F7FF] py-12'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <Swiper
+            navigation
+            pagination={{ clickable: true }}
+            loop={true}
+            spaceBetween={30}
+            slidesPerView={1}
+            className='rounded-2xl overflow-hidden'
+          >
+            <SwiperSlide>
+              <div className='relative w-full h-[300px] md:h-[600px]'>
+                <img 
+                  src={new URL('../assets/1.jpg', import.meta.url).href}
+                  alt='Luxury Home'
+                  className='absolute inset-0 w-full h-full object-cover object-center'
+                />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className='relative w-full h-[300px] md:h-[600px]'>
+                <img 
+                  src={new URL('../assets/2.jpg', import.meta.url).href}
+                  alt='Modern Apartment'
+                  className='absolute inset-0 w-full h-full object-cover object-center'
+                />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className='relative w-full h-[300px] md:h-[600px]'>
+                <img 
+                  src={new URL('../assets/3.jpg', import.meta.url).href}
+                  alt='Beachfront Property'
+                  className='absolute inset-0 w-full h-full object-cover object-center'
+                />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className='relative w-full h-[300px] md:h-[600px]'>
+                <img 
+                  src={new URL('../assets/4.jpg', import.meta.url).href}
+                  alt='Luxury Penthouse'
+                  className='absolute inset-0 w-full h-full object-cover object-center'
+                />
+              </div>
+            </SwiperSlide>
+          </Swiper>
+        </div>
+      </div>
+
+      {/* Featured Properties Section */}
+      <div id="featured-properties" className='bg-[#F0F7FF] py-16'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <h2 className='text-4xl font-bold text-gray-800 mb-6'>Featured Properties</h2>
+          
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+            {featuredProperties.map((property) => (
+              <Link to={`/property/${property._id}`} key={property._id}>
+                <div className='bg-white rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105'>
+                  <div className='relative h-64'>
+                    <img 
+                      src={property.imageUrls[0]}
+                      alt={property.name}
+                      className='w-full h-full object-cover'
+                    />
+                  </div>
+                  <div className='p-6 bg-[#0A0B2E] text-white'>
+                    <h3 className='text-2xl font-bold mb-2'>{property.name}</h3>
+                    <p className='flex items-center gap-2 text-gray-300 mb-2'>
+                      <span className='inline-block'>📍</span> {property.address}
+                    </p>
+                    <p className='text-sm text-gray-300 mb-4 line-clamp-2'>
+                      {property.description}
+                    </p>
+                    <div className='flex items-center justify-between'>
+                      <p className='text-2xl font-bold text-[#FF5A3D]'>₹{(property.regularPrice / 10000000).toFixed(2)} Cr</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Signature Property Section */}
+      <div className='bg-[#F0F7FF] py-16'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <h2 className='text-4xl font-bold text-gray-800 mb-6'>Signature property</h2>
+          {/* <p className='text-blue-600 mb-8 hover:underline cursor-pointer'>Show more places ready to move</p> */}
+          
+          {/* Signature Property Card */}
+          <div className='bg-white rounded-2xl overflow-hidden shadow-xl'>
+            <div className='grid md:grid-cols-2'>
+              <div className='relative h-[300px] md:h-full'>
+                <img 
+                  src='/assets/Properties Images/AaradhyaAvaan/AaradhyaAvaan01.jpg'
+                  alt='Signature Property'
+                  className='w-full h-full object-cover'
+                />
+              </div>
+              <div className='bg-[#0A0B2E] text-white p-8 flex flex-col justify-between'>
+                <div>
+                  <h3 className='text-3xl font-bold mb-2'>MICL Aaradhya Avaan</h3>
+                  <p className='text-gray-300 mb-4'>Tardeo, Mumabai</p>
+                  <p className='text-[#FF5A3D] text-2xl font-bold mb-4'>7.99 Cr - 18.49 Cr</p>
+                  <p className='text-xl mb-6'>3, 4 BHK Apartments</p>
+                </div>
+                <button
+                  onClick={() => setIsContactPopupOpen(true)}
+                  className='bg-[#FF5A3D] text-white px-8 py-3 rounded-lg hover:bg-opacity-90 transition-all text-lg font-semibold w-full md:w-auto'
+                >
+                  Contact
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Contact Popup */}
-      <ContactPopup
-        isOpen={isContactPopupOpen}
-        onClose={() => setIsContactPopupOpen(false)}
+      <ContactPopup 
+        isOpen={isContactPopupOpen} 
+        onClose={() => setIsContactPopupOpen(false)} 
       />
-      {/* listing results for offer, sale and rent */}
 
-
-      <div className="max-w-6xl mx-auto px-4 flex flex-col gap-8 my-10">
-        {/* Recent Offers */}
-        {offerListings && offerListings.length > 0 && (
-          <div className="my-3">
-            <h2 className="text-5xl font-semibold text-slate-600">Featured Properties</h2><br />
-            <Link
-              className="text-sm text-blue-800 hover:underline"
-              to={'http://localhost:5173/search?offer=true'}
-            >
-              Show more offers
-            </Link><br />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-              <div
-                className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
-                key={'674af66632db38e38d33e03a'}
-              >
-                <Link to={`/listing/${"674af66632db38e38d33e03a"}`}>
-                  <img
-                    src="https://imgur.com/KAqwILH.jpg"
-                    className="rounded-t-lg w-full h-48 object-cover"
-                  />
-                </Link>
-                <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
-                  <h3 className="text-xl font-semibold">25 West Hubtown</h3>
-                  <div className="flex items-center text-sm my-1">
-                    <FaMapMarkerAlt className="text-white mr-1" />
-                    <span className="text-gray-200">Bandra, Mumbai</span>
-                  </div>
-                  <p className="text-gray-300 text-sm">25 West by The Wadhwa Group and Hubtown is a RERA-registered under-construction project in Bandra, Mumbai, offering 4BHK and 5BHK apartments with possession by June 2028.</p>
-                  <div className="mt-4">
-                    <p className="text-3xl font-bold">Rs.10Cr+</p>
-                    <p className="flex items-center text-sm">
-                      <FaMapMarkerAlt className="mr-1" />
-                      <span className="text-[#ff6a35]">Mumbai</span>
-                    </p>
-                  </div>
-                </div>
+      {/* Featured Developers Section */}
+      <div className='bg-[#F0F7FF] py-16'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <h2 className='text-4xl font-bold text-gray-800 mb-12'>Featured Developers</h2>
+          
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+            {/* Lodha Developer Card */}
+            <div className='bg-white rounded-xl p-6 shadow-lg text-center'>
+              <div className='w-24 h-24 mx-auto mb-4 rounded-full bg-[#FF5A3D]/10 flex items-center justify-center'>
+                <img 
+                  src="/assets/Lodha.png"
+                  alt="Lodha"
+                  className='w-16 h-16 object-contain'
+                />
               </div>
-              {/* <div
-                    className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
-                    key={listing._id}
-                  >
-                    <Link to={`/listing/${listing._id}`}>
-                      <img
-                        src={listing.imageUrls[0]}
-                        alt={listing.name}
-                        className="rounded-t-lg w-full h-48 object-cover"
-                      />
-                    </Link>
-                    <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
-                      <h3 className="text-xl font-semibold">{listing.name}</h3>
-                      <div className="flex items-center text-sm my-1">
-                        <FaMapMarkerAlt className="text-white mr-1" />
-                        <span className="text-gray-200">{listing.address}</span>
-                      </div>
-                      <p className="text-gray-300 text-sm">{listing.description}</p>
-                      <div className="mt-4">
-                      <p className="text-3xl font-bold">{formatPrice(listing.price)}</p>
-                      <p className="flex items-center text-sm">
-                          <FaMapMarkerAlt className="mr-1" />
-                          <span className="text-[#ff6a35]">{listing.city}</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div> */}
-              <div
-                className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
-                key={'6749b1c62510d7520ed4edd7'}>
-                <Link to={`/listing/${'6749b1c62510d7520ed4edd7'}`}>
-                  <img
-                    src='https://imgur.com/RXBbRyU.jpg'
-                    className="rounded-t-lg w-full h-48 object-cover"
-                  />
-                </Link>
-                <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
-                  <h3 className="text-xl font-semibold">Aaradhya Avaan By MICL</h3>
-                  <div className="flex items-center text-sm my-1">
-                    <FaMapMarkerAlt className="text-white mr-1" />
-                    <span className="text-gray-200">Aaradhya Avaan</span>
-                  </div>
-                  <p className="text-gray-300 text-sm">MICL Aaradhya Avaan by MICL is a  luxury under-construction project in Tardeo, Mumbai, featuring 3 towers with 61 floors and exclusive designer residences, set for possession in December 2030.</p>
-                  <div className="mt-4">
-                    <p className="text-3xl font-bold">Rs.9Cr</p>
-                    <p className="flex items-center text-sm">
-                      <FaMapMarkerAlt className="mr-1" />
-                      <span className="text-[#ff6a35]">Mumbai</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="bg-white border border-gray-200 rounded-lg shadow-md max-w-3xs"
-                key={'67549987e73b6db2d2307212'}
-              >
-                <Link to={`/listing/${"67549987e73b6db2d2307212"}`}>
-                  <img
-                    src="https://imgur.com/01h0ftH.jpg"
-                    className="rounded-t-lg w-full h-48 object-cover"
-                  />
-                </Link>
-                <div className="p-5 bg-gradient-to-b from-[#0a0a40] to-[#0a0a40] text-white rounded-b-lg">
-                  <h3 className="text-xl font-semibold">Ruparel Jewel</h3>
-                  <div className="flex items-center text-sm my-1">
-                    <FaMapMarkerAlt className="text-white mr-1" />
-                    <span className="text-gray-200">Parel, Mumbai</span>
-                  </div>
-                  <p className="text-gray-300 text-sm">Ruparel Jewel by Ruparel Realty is an under-construction project in Parel, Mumbai, offering
-                  luxury with the blend of elegance and exclusivity ensuring comfort and well-being to its owners.</p>
-                  <div className="mt-4">
-                    <p className="text-3xl font-bold">Rs.7.25Cr+</p>
-                    <p className="flex items-center text-sm">
-                      <FaMapMarkerAlt className="mr-1" />
-                      <span className="text-[#ff6a35]">Mumbai</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Under Construction */}
-        {offerListings && offerListings.length > 0 && (
-          <div className="my-3">
-            <h2 className="text-5xl font-semibold text-slate-600">Featured Developers</h2><br />
-            <br /><br />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
-              <div
-                className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                {/* Circular Image */}
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
-
-                  <img
-                    src="https://imgur.com/W7BJORU.jpg" // Actual Runwal image URL
-                    alt="Lodha"
-                    className="w-full h-full object-fill" // Updated to "object-fill" to ensure the image fills the circle
-                  />
-                </div>
-                {/* Card Content */}
-                <div className="p-5 mt-12">
-                  <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
-                    Lodha
-                  </h3>
-                  <div className="flex items-center justify-center text-sm mt-2">
-                    <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
-                    <span className="text-gray-500">Kolshet Road </span>
-                  </div>
-                  <p className="text-gray-600 text-sm mt-2 text-center"> Premium homes with world-class amenities and breathtaking views.</p>
-                  <div className="mt-4 flex justify-between items-center">
-                    {/* <p className="text-3xl font-bold text-[#ff6a35]">${listing.cost}</p> */}
-                    <p className="flex items-center text-sm text-[#ff6a35]">
-                      <FaMapMarkerAlt className="mr-1" />
-                      <span>Thane</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                {/* Circular Image */}
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
-                  <img
-                    src="https://imgur.com/8pfGsPW.jpg" // Replace with actual Piramal image URL
-                    alt="Piramal"
-                    className="w-full h-full object-fill"
-                  />
-                </div>
-                {/* Card Content */}
-                <div className="p-5 mt-12">
-                  <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
-                    Piramal
-                  </h3>
-                  <div className="flex items-center justify-center text-sm mt-2">
-                    <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
-                    <span className="text-gray-500">Lower Parel</span>
-                  </div>
-                  <p className="text-gray-600 text-sm mt-2 text-center">Luxury residences that redefine modern living in Mumbai.</p>
-                  <div className="mt-4 flex justify-between items-center">
-                    <p className="flex items-center text-sm text-[#ff6a35]">
-                      <FaMapMarkerAlt className="mr-1" />
-                      <span>Mumbai</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="relative bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                {/* Circular Image */}
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-[#ff6a35] shadow-md">
-                  <img
-                    src="https://imgur.com/DAFwUtm.jpg" // Replace with actual Runwal image URL
-                    alt="Runwal"
-                    className="w-full h-full object-fill"
-                  />
-                </div>
-                {/* Card Content */}
-                <div className="p-5 mt-12">
-                  <h3 className="text-xl font-semibold text-[#ff6a35] text-center">
-                    Runwal
-                  </h3>
-                  <div className="flex items-center justify-center text-sm mt-2">
-                    <FaMapMarkerAlt className="text-[#ff6a35] mr-1" />
-                    <span className="text-gray-500">Mulund West</span>
-                  </div>
-                  <p className="text-gray-600 text-sm mt-2 text-center">Affordable yet stylish homes in a vibrant community.</p>
-                  <div className="mt-4 flex justify-between items-center">
-                    <p className="flex items-center text-sm text-[#ff6a35]">
-                      <FaMapMarkerAlt className="mr-1" />
-                      <span>Mumbai</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-
-            </div>
-          </div>
-        )}
-        <h2 className='text-slate-600 text-5xl font-semibold'>
-          Latest News and Articles
-        </h2>
-        <div id="news-section" className="w-full bg-gray-100 py-8 rounded-lg">
-          <div className="container mx-auto relative">
-            {/* Carousel Wrapper */}
-            <div
-              ref={carouselRef}
-              className="carousel flex overflow-x-auto snap-x snap-mandatory px-4  "
-              style={{
-                scrollbarWidth: "none",
-                WebkitOverflowScrolling: "touch",
-              }}
-            >
-              {slides.map((slide, index) => (
-                <div
-                  key={index}
-                  className="snap-center shrink-0 w-full md:w-1/3 px-4"
-                >
-                  <img
-                    src={slide.img}
-                    alt={`Slide ${index + 1}`}
-                    className="w-full h-64 object-cover rounded-md"
-                  />
-                  <h3 className="mt-4 text-xl font-bold text-gray-800">
-                    {slide.heading}
-                  </h3>
-                  <p className="mt-2 text-gray-600">{slide.description}</p>
-                </div>
-              ))}
+              <h3 className='text-2xl font-bold mb-2'>Lodha</h3>
+              <p className='flex items-center justify-center gap-2 text-gray-600 mb-3'>
+                {/* <span className='inline-block'>📍</span> Kokshet Road */}
+              </p>
+              <p className='text-gray-600 mb-4'>
+                Premium homes with world-class amenities and breathtaking views.
+              </p>
+              <p className='flex items-center justify-center gap-1 text-[#FF5A3D] font-medium'>
+                {/* <span className='inline-block'>📍</span> Thane */}
+              </p>
             </div>
 
-            {/* Carousel Navigation Buttons */}
-            <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
-              <button
-                className="p-2 bg-gray-300 rounded-full"
-                onClick={() => scrollCarousel(-1)}
-              >
-                <FaArrowLeft />
-              </button>
+            {/* Piramal Developer Card */}
+            <div className='bg-white rounded-xl p-6 shadow-lg text-center'>
+              <div className='w-24 h-24 mx-auto mb-4 rounded-full bg-[#FF5A3D]/10 flex items-center justify-center'>
+                <img 
+                  src="/assets/Piramal.png"
+                  alt="Piramal"
+                  className='w-16 h-16 object-contain'
+                />
+              </div>
+              <h3 className='text-2xl font-bold mb-2'>Piramal</h3>
+              <p className='flex items-center justify-center gap-2 text-gray-600 mb-3'>
+                {/* <span className='inline-block'>📍</span> Lower Parel */}
+              </p>
+              <p className='text-gray-600 mb-4'>
+                Luxury residences that redefine modern living in Mumbai.
+              </p>
+              <p className='flex items-center justify-center gap-1 text-[#FF5A3D] font-medium'>
+                {/* <span className='inline-block'>📍</span> Mumbai */}
+              </p>
             </div>
-            <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
-              <button
-                className="p-2 bg-gray-300 rounded-full"
-                onClick={() => scrollCarousel(1)}
-              >
-                <FaArrowRight />
-              </button>
+
+            {/* Runwal Developer Card */}
+            <div className='bg-white rounded-xl p-6 shadow-lg text-center'>
+              <div className='w-24 h-24 mx-auto mb-4 rounded-full bg-[#FF5A3D]/10 flex items-center justify-center'>
+                <img 
+                  src="/assets/Runwal.jpg"
+                  alt="Runwal"
+                  className='w-16 h-16 object-contain'
+                />
+              </div>
+              <h3 className='text-2xl font-bold mb-2'>Runwal</h3>
+              <p className='flex items-center justify-center gap-2 text-gray-600 mb-3'>
+                {/* <span className='inline-block'>📍</span> Mulund West */}
+              </p>
+              <p className='text-gray-600 mb-4'>
+                Affordable yet stylish homes in a vibrant community.
+              </p>
+              <p className='flex items-center justify-center gap-1 text-[#FF5A3D] font-medium'>
+                {/* <span className='inline-block'>📍</span> Mumbai */}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
+      {/* Latest News and Articles Section */}
+      <section id="news-section" className='max-w-7xl mx-auto px-4 py-16'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <h2 className='text-4xl font-bold text-gray-800 mb-12'>Latest News and Articles</h2>
+          
+          <Swiper
+            navigation
+            pagination={{ clickable: true }}
+            loop={true}
+            spaceBetween={30}
+            slidesPerView={1}
+            className='h-[400px] rounded-2xl'
+          >
+            {/* Article 1 */}
+            <SwiperSlide>
+              <div className='grid md:grid-cols-2 h-full'>
+                <img 
+                  src="/assets/Firenews.png" 
+                  alt="Fire Safety"
+                  className='w-full h-full object-cover'
+                />
+                <div className='bg-white p-8'>
+                  <h3 className='text-2xl font-bold mb-4'>Maharashtra issues special fire safety regulations</h3>
+                  <p className='text-gray-600 mb-4'>
+                    Maharashtra government on October 11, 2024 has issued final notifications to enforce fire safety norms for vulnerable buildings in Mumbai and Maharashtra.
+                  </p>
+                  <button className='text-[#FF5A3D] font-semibold hover:underline'>Read More →</button>
+                </div>
+              </div>
+            </SwiperSlide>
 
-      {/* <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
-          {offerListings && offerListings.length > 0 && (
-            <div className=''>
-              <div className='my-3'>
-                <h2 className='text-5xl font-semibold text-slate-600'>Recent offers</h2>
-                <Link className='text-sm text-blue-800 hover:underline' to={'http://localhost:5173/search?offer=true'}>Show more offers</Link>
+            {/* Article 2 */}
+            <SwiperSlide>
+              <div className='grid md:grid-cols-2 h-full'>
+                <img 
+                  src="/assets/amb news.jpg" 
+                  alt="Antilia"
+                  className='w-full h-full object-cover'
+                />
+                <div className='bg-white p-8'>
+                  <h3 className='text-2xl font-bold mb-4'>Everything you want to know about Mukesh Ambani's Antilia house</h3>
+                  <p className='text-gray-600 mb-4'>
+                    The Ambani house is the world's most expensive biggest residential property.
+                  </p>
+                  <button className='text-[#FF5A3D] font-semibold hover:underline'>Read More →</button>
+                </div>
               </div>
-              <div className='flex flex-wrap gap-14'>
-                {offerListings.map((listing) => (
-                  <ListingItem listing={listing} key={listing._id} />
-                ))}
-              </div>
-            </div>
-          )}
-          {underConstructionListings.length > 0 && (
-            <div>
-              <div className='my-3'>
-                <h2 className='text-5xl font-semibold text-slate-600'>Recent places under construction</h2>
-                <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=under construction'}>Show more places under construction</Link>
-              </div>
-              <div className='flex flex-wrap gap-14'>
-                {underConstructionListings.map((listing) => (
-                  <ListingItem listing={listing} key={listing._id} />
-                ))}
-              </div>
-            </div>
-          )}
+            </SwiperSlide>
 
-          {nearingPossessionListings.length > 0 && (
-            <div>
-              <div className='my-3'>
-                <h2 className='text-5xl font-semibold text-slate-600'>Recent places nearing possession</h2>
-                <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=nearing possession'}>Show more places nearing possession</Link>
+            {/* Article 3 */}
+            <SwiperSlide>
+              <div className='grid md:grid-cols-2 h-full'>
+                <img 
+                  src="/assets/anilamb news.jpg" 
+                  alt="Anil Ambani House"
+                  className='w-full h-full object-cover'
+                />
+                <div className='bg-white p-8'>
+                  <h3 className='text-2xl font-bold mb-4'>Inside industrialist Anil Ambani's house in Mumbai</h3>
+                  <p className='text-gray-600 mb-4'>
+                    Anil Ambani's lavish home is counted among the most expensive homes in India. The 17-storey structure is situated at Pali Hill in Mumbai.
+                  </p>
+                  <button className='text-[#FF5A3D] font-semibold hover:underline'>Read More →</button>
+                </div>
               </div>
-              <div className='flex flex-wrap gap-14'>
-                {nearingPossessionListings.map((listing) => (
-                  <ListingItem listing={listing} key={listing._id} />
-                ))}
-              </div>
-            </div>
-          )}
+            </SwiperSlide>
+          </Swiper>
+        </div>
+      </section>
 
-          {readyToMoveListings.length > 0 && (
-            <div>
-              <div className='my-3'>
-                <h2 className='text-5xl font-semibold text-slate-600'>Recent places ready to move</h2>
-                <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=ready to move'}>Show more places ready to move</Link>
-              </div>
-              <div className='flex flex-wrap gap-14'>
-                {readyToMoveListings.map((listing) => (
-                  <ListingItem listing={listing} key={listing._id} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div> */}
-      <div className='bg-blue-100'></div>
-      <Footer />
-    </>
+      <Footer /> 
+    </div>
   );
 }

@@ -1,18 +1,18 @@
-import { FaWhatsapp, FaInstagram, FaPhone } from 'react-icons/fa';
+import { FaWhatsapp, FaInstagram, FaYoutube } from 'react-icons/fa';
 
 export default function ContactPopup({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/+919876543210', '_blank'); // Replace with your WhatsApp number
+    window.open('https://wa.me/7738434767', '_blank');
   };
 
   const handleInstagramClick = () => {
-    window.open('https://instagram.com/blueroof.india', '_blank'); // Replace with your Instagram handle
+    window.open('https://www.instagram.com/blueroofindia?igsh=MWpyYWw4Mm5iZ2lscQ==', '_blank');
   };
 
-  const handlePhoneClick = () => {
-    window.open('tel:+919876543210'); // Replace with your contact number
+  const handleYouTubeClick = () => {
+    window.open('https://www.youtube.com/@blueroofindia', '_blank');
   };
 
   return (
@@ -54,11 +54,11 @@ export default function ContactPopup({ isOpen, onClose }) {
             </button>
 
             <button
-              onClick={handlePhoneClick}
-              className="w-full flex items-center justify-center gap-2 bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+              onClick={handleYouTubeClick}
+              className="w-full flex items-center justify-center gap-2 bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
             >
-              <FaPhone className="text-xl" />
-              +91 98765 43210
+              <FaYoutube className="text-xl" />
+              YouTube
             </button>
           </div>
         </div>
