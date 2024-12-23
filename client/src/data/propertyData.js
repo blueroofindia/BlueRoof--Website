@@ -68,7 +68,7 @@ export const allListings = [
       'Garden',
       'Club House',
       'Security',
-      'Mini-Theater'
+      'Children Playing Area'
     ],
     developer: 'Ruparel Realty',
     parking: 'Covered Parking'
@@ -140,7 +140,7 @@ export const allListings = [
       'Garden',
       'Club House',
       'Security',
-      'Mini-Theater'
+      'Children Playing Area'
     ],
     developer: 'Lodha',
     parking: 'Covered Parking'
@@ -208,7 +208,7 @@ export const allListings = [
       'Garden',
       'Club House',
       'Security',
-      'Mini-Theater'
+      'Children Playing Area'
     ],
     developer: 'Avdharna Infrastructure',
     parking: 'Covered Parking'
@@ -278,7 +278,7 @@ export const allListings = [
       'Garden',
       'Club House',
       'Security',
-      'Mini-Theater'
+      'Children Playing Area'
     ],
     developer: 'Ashar Group',
     parking: 'Covered Parking'
@@ -349,7 +349,7 @@ export const allListings = [
       'Garden',
       'Club House',
       'Security',
-      'Mini-Theater'
+      'Children Playing Area'
     ],
     developer: 'Wadhwa Group',
     parking: 'Covered Parking'
@@ -419,7 +419,7 @@ export const allListings = [
       'Garden',
       'Club House',
       'Security',
-      'Mini-Theater'
+      'Children Playing Area'
     ],
     developer: 'MICL',
     parking: 'Covered Parking'
@@ -488,7 +488,7 @@ export const allListings = [
       'Garden',
       'Club House',
       'Security',
-      'Mini-Theater'
+      'Children Playing Area'
     ],
     developer: 'Lodha',
     parking: 'Covered Parking'
@@ -556,7 +556,7 @@ export const allListings = [
       'Garden',
       'Club House',
       'Security',
-      'Mini-Theater'
+      'Children Playing Area'
     ],
     developer: 'Lodha',
     parking: 'Covered Parking'

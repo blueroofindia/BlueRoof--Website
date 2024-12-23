@@ -26,7 +26,7 @@ const amenityIconMap = {
   'Garden': FaTree,
   'Club House': FaHome,
   'Security': FaShieldAlt,
-  'Mini-Theater': FaFilm
+  'Children Playing Area': FaChild
 };
 
 const iconComponents = {
