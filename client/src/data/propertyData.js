@@ -39,7 +39,7 @@ export const allListings = [
       {
         icon: 'BiIdCard',
         label: 'Rera ID',
-        value: 'P51900011418'
+        value: 'P51900003058'
       },
       {
         icon: 'BiBuildings',
@@ -111,7 +111,7 @@ export const allListings = [
       {
         icon: 'BiIdCard',
         label: 'Rera ID',
-        value: 'P51900025184'
+        value: 'A52000000045'
       },
       {
         icon: 'BiBuildings',
@@ -179,7 +179,7 @@ export const allListings = [
       {
         icon: 'BiIdCard',
         label: 'Rera ID',
-        value: 'P51900030600'
+        value: 'P51800028736'
       },
       {
         icon: 'BiBuildings',
@@ -249,7 +249,7 @@ export const allListings = [
       {
         icon: 'BiIdCard',
         label: 'Rera ID',
-        value: 'P51900030729'
+        value: 'P51700047432'
       },
       {
         icon: 'BiBuildings',
@@ -320,7 +320,7 @@ export const allListings = [
       {
         icon: 'BiIdCard',
         label: 'Rera ID',
-        value: 'P51900011418'
+        value: 'P51900011418, P51900006860, P51900025184, P51900030600, P51900030729'
       },
       {
         icon: 'BiBuildings',
@@ -390,7 +390,7 @@ export const allListings = [
       {
         icon: 'BiIdCard',
         label: 'Rera ID',
-        value: 'P51900025184'
+        value: 'P51900048675'
       },
       {
         icon: 'BiBuildings',
@@ -527,7 +527,7 @@ export const allListings = [
       {
         icon: 'BiIdCard',
         label: 'Rera ID',
-        value: 'P51900025184'
+        value: 'P51900034289'
       },
       {
         icon: 'BiBuildings',
