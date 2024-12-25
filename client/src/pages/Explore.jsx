@@ -24,8 +24,7 @@ export default function Explore() {
       description: 'Ruparel Jewel by Ruparel Realty is an under-construction project in Parel, Mumbai, offering luxurious apartments with modern amenities.',
       type: 'Apartment',
       regularPrice: {
-        '2BHK': 72500000,
-        '3BHK': 95000000
+        range: '7.25Cr to 10Cr'
       },
       region: 'Mumbai',
       location: 'Parel',
@@ -74,8 +73,7 @@ export default function Explore() {
       description: 'Launching Lodha Corinthia, a glorious 7-acre estate offering an international lifestyle designed for Mumbai\'s finest.',
       type: 'Villa',
       regularPrice: {
-        '3BHK': 19900000,
-        '4BHK': 25000000
+        range: '1.99Cr to 2.99Cr'
       },
       region: 'Mumbai',
       location: 'Bhandup',
@@ -125,7 +123,7 @@ export default function Explore() {
       description: 'Experience luxury living at its finest with panoramic sea views and world-class amenities.',
       type: 'Penthouse',
       regularPrice: {
-        '4BHK': 100000000
+        range: '19.95Cr to 40.25Cr'
       },
       region: 'Mumbai',
       location: 'Bandra',
@@ -166,8 +164,7 @@ export default function Explore() {
       description: 'Ashar Pulse is a project by Ashar Group in Thane. It is a Under Construction project offering 2.5 & 3.5 BHK Homes.',
       type: 'Apartment',
       regularPrice: {
-        '2BHK': 25000000,
-        '3BHK': 35000000
+        range: '90Lakh to 2.5Cr'
       },
       region: 'Thane',
       location: 'Majiwada',
@@ -216,7 +213,7 @@ export default function Explore() {
       description: 'Experience luxury living at its finest with panoramic sea views and world-class amenities.',
       type: 'Penthouse',
       regularPrice: {
-        '5BHK': 150000000
+        range: '19Cr to 92.47Cr'
       },
       region: 'Mumbai',
       location: 'Prabhadevi',
@@ -257,7 +254,7 @@ export default function Explore() {
       description: 'Premium residences offering a perfect blend of luxury and comfort with modern architecture.',
       type: 'Apartment',
       regularPrice: {
-        '3BHK': 45000000
+        range: '8.6Cr to 21.17Cr'
       },
       region: 'Mumbai',
       location: 'Malad',
@@ -298,7 +295,7 @@ export default function Explore() {
       description: 'Luxury apartments with stunning views and premium amenities for an elevated lifestyle.',
       type: 'Apartment',
       regularPrice: {
-        '2BHK': 35000000
+        range: '85Lakh to 2.5Cr'
       },
       region: 'Thane',
       location: 'Thane West',
@@ -337,7 +334,7 @@ export default function Explore() {
       description: 'Luxury apartments with stunning views and premium amenities for an elevated lifestyle.',
       type: 'Apartment',
       regularPrice: {
-        '2BHK': 35000000
+        range: '12Cr to 22Cr'
       },
       region: 'Thane',
       location: 'Thane West',
@@ -407,8 +404,15 @@ export default function Explore() {
       const matchesRooms = !filters.rooms || listing.rooms.some(room => room === filters.rooms);
       
       const matchesCost = !filters.cost || (() => {
-        const prices = Object.values(listing.regularPrice);
-        const minPrice = Math.min(...prices) / 10000000; // Convert to Cr
+        const priceText = listing.regularPrice.range.split(' to ')[0]; // Get the minimum price
+        let minPrice;
+        
+        if (priceText.includes('Lakh')) {
+          minPrice = parseFloat(priceText.replace('Lakh', '')) / 100; // Convert Lakh to Cr
+        } else {
+          minPrice = parseFloat(priceText.replace('Cr', ''));
+        }
+
         switch(filters.cost) {
           case '50L-1':
             return minPrice >= 0.5 && minPrice <= 1;

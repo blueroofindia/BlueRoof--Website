@@ -6,14 +6,7 @@ export default function ListingItem({ listing }) {
   const [isExpanded, setIsExpanded] = useState(false);
   
   const getPriceRange = () => {
-    const prices = Object.values(listing.regularPrice);
-    const minPrice = Math.min(...prices);
-    const maxPrice = Math.max(...prices);
-    
-    if (minPrice === maxPrice) {
-      return `₹${(minPrice / 10000000).toFixed(2)} Cr`;
-    }
-    return `₹${(minPrice / 10000000).toFixed(2)} - ${(maxPrice / 10000000).toFixed(2)} Cr`;
+    return `₹${listing.regularPrice.range}`;
   };
 
   const truncateDescription = (text, maxLength = 150) => {

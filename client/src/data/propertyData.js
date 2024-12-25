@@ -13,7 +13,9 @@ export const allListings = [
                   There is an impressive range of conveniences for every resident and each home at Ruparel Jewel Parel, Mumbai will have a beautiful view,
                   ensuring a relaxing atmosphere for its owners after a taxing day at work.`,
     type: 'Apartment',
-    regularPrice: 72500000, // 7.25Cr
+    regularPrice: {
+      range: '7.25Cr to 10Cr'
+    },
     region: 'Mumbai',
     location: 'Parel',
     rooms: ['2BHK', '3BHK', '4BHK'], // Array of available room types
@@ -85,7 +87,9 @@ export const allListings = [
                   from dazzling Art Deco architecture with gilded motifs to a world-class clubhouse,
                   every facet of Lodha Corinthia is designed to elevate your standard of living - so you don't just move in, you move up.`,
     type: 'Villa',
-    regularPrice: 19900000, // 1.99Cr
+    regularPrice: {
+      range: '1.99Cr to 2.99Cr'
+    },
     region: 'Mumbai',
     location: 'Bhandup',
     rooms: '3BHK',
@@ -153,7 +157,9 @@ export const allListings = [
                   25 west is scheduled for possession in Jun, 2032 and will offer expansive apartments in various configurations.
                   25 west has uniquely designed floor plans and layouts to ensure ease and convenience for its residents. It promises a stress-free life for its residents where privacy and freedom come hand-in-hand for all homeowners. Built for a special few, 25 west Bandra West has single tower in this project, with 44 floors each and just 65 units to offer. 25 west will be an upscale address as it will be spread over an area of 0.27 acres, making it one of the most lavishly built projects in the Western Mumbai region. There is an impressive range of conveniences for every resident and each home at 25 west Bandra West, Mumbai will have a beautiful view, ensuring a relaxing atmosphere for its owners after a taxing day at work.`,
     type: 'Penthouse',
-    regularPrice: 100000000, // 10Cr
+    regularPrice: {
+      range: '19.95Cr to 40.25Cr'
+    },
     region: 'Mumbai',
     location: 'Bandra',
     rooms: '4BHK',
@@ -224,7 +230,9 @@ export const allListings = [
                   Sports enthusiasts can also make the most of Cricket Pitch, Badminton Court, Cycling & Jogging Track. Residents can also enjoy Barbecue Area provisions in the project.
                   There is provision for Closed Car Parking.`,
     type: 'Apartment',
-    regularPrice: 25000000, // 2.5Cr
+    regularPrice: {
+      range: '90Lakh to 2.5Cr'
+    },
     region: 'Thane',
     location: 'Majiwada',
     rooms: '2BHK',
@@ -294,7 +302,9 @@ export const allListings = [
     
     The internal and external development of 25 South is currently in progress and will be ready in due time. The construction at 25 South is in full swing and most of the units are already sold.`,
     type: 'Penthouse',
-    regularPrice: 150000000, // 15Cr
+    regularPrice: {
+      range: '19Cr to 92.47Cr'
+    },
     region: 'Mumbai',
     location: 'Prabhadevi',
     rooms: '5BHK',
@@ -364,7 +374,9 @@ export const allListings = [
     
     MICL Aaradhya Avaan has uniquely designed floor plans and layouts to ensure ease and convenience for its residents. It promises a stress-free life for its residents where privacy and freedom come hand-in-hand for all homeowners. Built for a special few, MICL Aaradhya Avaan Tardeo has 3 towers in this project, with 61 floors each and just 328 units to offer. MICL Aaradhya Avaan will be an upscale address as it will be spread over an area of 0.74 acres, making it one of the most lavishly built projects in the Mumbai South region. There is an impressive range of conveniences for every resident and each home at MICL Aaradhya Avaan Tardeo, Mumbai will have a beautiful view, ensuring a relaxing atmosphere for its owners after a taxing day at work.`,
     type: 'Apartment',
-    regularPrice: 120000000, // 12Cr
+    regularPrice: {
+      range: '8.6Cr to 21.17Cr'
+    },
     region: 'Mumbai',
     location: 'Malad West',
     rooms: '3BHK',
@@ -434,7 +446,9 @@ export const allListings = [
     
     Central Thane is well-connected to Mumbai via the Eastern Express Highway. There are schools, hospitals, shopping malls and business establishments in the area.`,
     type: 'Apartment',
-    regularPrice: 80000000, // 8Cr
+    regularPrice: {
+      range: '85Lakh to 2.5Cr'
+    },
     region: 'Mumbai',
     location: 'Thane West',
     rooms: '2BHK',
@@ -503,7 +517,9 @@ export const allListings = [
     
     Raheja Modern Vivarea has uniquely designed floor plans and layouts to ensure ease and convenience for its residents. It promises a stress-free life for its residents where privacy and freedom come hand-in-hand for all homeowners. Built for a special few, Raheja Modern Vivarea Mahalaxmi has 2 towers in this project, with 44 floors each and just 266 units to offer. Raheja Modern Vivarea will be an upscale address as it will be spread over an area of 3.11 acres, making it one of the most lavishly built projects in the Mumbai South region. There is an impressive range of conveniences for every resident and each home at Raheja Modern Vivarea Mahalaxmi, Mumbai will have a beautiful view, ensuring a relaxing atmosphere for its owners after a taxing day at work.`,
     type: 'Apartment',
-    regularPrice: 80000000, // 8Cr
+    regularPrice: {
+      range: '12Cr to 22Cr'
+    },
     region: 'Mumbai',
     location: 'Thane West',
     rooms: '2BHK',

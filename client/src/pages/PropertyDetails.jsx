@@ -105,7 +105,7 @@ export default function PropertyDetails() {
             </div>
             <div className="w-full sm:w-auto text-left sm:text-right">
               <p className="text-xl sm:text-2xl font-bold text-[#FF5A3D]">
-                ₹{(property.regularPrice / 10000000).toFixed(2)} Cr
+                ₹{property.regularPrice.range}
               </p>
             </div>
           </div>
