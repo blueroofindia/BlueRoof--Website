@@ -250,14 +250,14 @@ export default function Explore() {
     {
       _id: '6',
       name: 'MICL Aaradhya Avaan',
-      address: 'Malad West, Mumbai',
+      address: 'Tardeo, Mumbai',
       description: 'Premium residences offering a perfect blend of luxury and comfort with modern architecture.',
       type: 'Apartment',
       regularPrice: {
         range: '8.6Cr to 21.17Cr'
       },
       region: 'Mumbai',
-      location: 'Malad',
+      location: 'Tardeo',
       rooms: ['3BHK'],
       configurations: [
         {

@@ -80,8 +80,8 @@ export default function Header() {
           >
             News
           </button>
-          <Link to='/explore' className='hover:text-[#FF5A3D] transition duration-300'>
-            Explore
+          <Link to='/explore' className='text-[#FF5A3D] border-2 border-[#FF5A3D] px-4 py-2 rounded-md hover:bg-[#FF5A3D] hover:text-white transition duration-300'>
+            Explore Property
           </Link>
         </nav>
 
@@ -152,10 +152,10 @@ export default function Header() {
               </button>
               <Link 
                 to='/explore' 
-                className='py-3 px-4 hover:bg-[#FF5A3D] hover:bg-opacity-10 rounded-lg transition-colors flex items-center'
+                className='text-[#FF5A3D] border-2 border-[#FF5A3D] py-3 px-4 rounded-lg hover:bg-[#FF5A3D] hover:text-white transition duration-300 flex items-center'
                 onClick={toggleMenu}
               >
-                Explore
+                Explore Property
               </Link>
             </nav>
           </div>
