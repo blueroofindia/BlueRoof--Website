@@ -72,7 +72,7 @@ export default function Header() {
             className='text-white hover:text-[#FF5A3D] transition duration-300'
             onClick={() => setIsContactPopupOpen(true)}
           >
-            Post Property (Free)
+            Post Property
           </button>
           <button 
             onClick={handleNewsClick}
