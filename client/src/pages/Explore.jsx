@@ -28,7 +28,7 @@ export default function Explore() {
       },
       region: 'Mumbai',
       location: 'Parel',
-      rooms: ['2BHK', '3BHK'],
+      rooms: ['3BHK', '4BHK'],
       configurations: [
         {
           type: '2BHK',
@@ -64,8 +64,9 @@ export default function Explore() {
         '24/7 Security'
       ],
       developer: 'Ruparel Realty',
-      parking: '2 Covered Parking'
+      parking: 'Covered Parking'
     },
+
     {
       _id: '2',
       name: 'Lodha Corthinia',
@@ -77,7 +78,7 @@ export default function Explore() {
       },
       region: 'Mumbai',
       location: 'Bhandup',
-      rooms: ['3BHK', '4BHK'],
+      rooms: ['2BHK','2.5BHK','3BHK', '4BHK',],
       configurations: [
         {
           type: '3BHK',
@@ -127,7 +128,7 @@ export default function Explore() {
       },
       region: 'Mumbai',
       location: 'Bandra',
-      rooms: ['4BHK'],
+      rooms: ['4BHK','5BHK','Penthouse'],
       configurations: [
         {
           type: '4BHK',
@@ -168,7 +169,7 @@ export default function Explore() {
       },
       region: 'Thane',
       location: 'Majiwada',
-      rooms: ['2BHK', '3BHK'],
+      rooms: ['1BHK','2BHK', '3BHK'],
       configurations: [
         {
           type: '2BHK',
@@ -217,7 +218,7 @@ export default function Explore() {
       },
       region: 'Mumbai',
       location: 'Prabhadevi',
-      rooms: ['5BHK'],
+      rooms: ['4BHK','5BHK','Penthouse'],
       configurations: [
         {
           type: '5BHK',
@@ -258,7 +259,7 @@ export default function Explore() {
       },
       region: 'Mumbai',
       location: 'Tardeo',
-      rooms: ['3BHK'],
+      rooms: ['3BHK', '4BHK', '5BHK'],
       configurations: [
         {
           type: '3BHK',
@@ -291,15 +292,15 @@ export default function Explore() {
     {
       _id: '7',
       name: 'Lodha Amara',
-      address: 'Thane West',
+      address: 'Kolshet Road, Thane West',
       description: 'Luxury apartments with stunning views and premium amenities for an elevated lifestyle.',
       type: 'Apartment',
       regularPrice: {
         range: '85Lakh to 2.5Cr'
       },
       region: 'Thane',
-      location: 'Thane West',
-      rooms: ['2BHK'],
+      location: 'Kolshet Road',
+      rooms: ['1BHK', '2BHK','3BHK', '4BHK'],
       configurations: [
         {
           type: '2BHK',
@@ -327,18 +328,19 @@ export default function Explore() {
       developer: 'Developer Name',
       parking: '2 Covered Parking'
     },
+
     {
       _id: '8',
       name: 'K Raheja Modern Vivarea',
-      address: 'Thane West',
+      address: 'Mahalaxmi, Mumbai',
       description: 'Luxury apartments with stunning views and premium amenities for an elevated lifestyle.',
       type: 'Apartment',
       regularPrice: {
         range: '12Cr to 22Cr'
       },
-      region: 'Thane',
-      location: 'Thane West',
-      rooms: ['2BHK'],
+      region: 'Mumbai',
+      location: 'Mahalaxmi',
+      rooms: ['3BHK', '3.5BHK', '4BHK', '5BHK'],
       configurations: [
         {
           type: '2BHK',

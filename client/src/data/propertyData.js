@@ -18,7 +18,7 @@ export const allListings = [
     },
     region: 'Mumbai',
     location: 'Parel',
-    rooms: ['2BHK', '3BHK', '4BHK'], // Array of available room types
+    rooms: ['3BHK', '4BHK'], // Array of available room types
     imageUrls: [
       '/assets/Properties Images/RuparelJewel/RuparelJewel01.jpg',
       '/assets/Properties Images/RuparelJewel/RuparelJewel02.jpg',
@@ -30,8 +30,8 @@ export const allListings = [
     specifications: [
       {
         icon: 'BiBed',
-        label: 'Beds',
-        value: '2BHK, 3BHK, 4BHK'
+        label: 'Room Types',
+        value: '3BHK, 4BHK'
       },
       {
         icon: 'BiArea',
@@ -56,7 +56,7 @@ export const allListings = [
       {
         icon: 'BiCalendar',
         label: 'Possession Date',
-        value: 'Dec 2024'
+        value: 'Dec 2025'
       },
       {
         icon: 'BiMapAlt',
@@ -92,7 +92,7 @@ export const allListings = [
     },
     region: 'Mumbai',
     location: 'Bhandup',
-    rooms: '3BHK',
+    rooms: '2BHK, 2.5BHK, 3BHK, 4BHK',
     imageUrls: [
       '/assets/Properties Images/LodhaCorthinia/LodhaCorthinia01.jpg',
       '/assets/Properties Images/LodhaCorthinia/LodhaCorthinia02.jpg',
@@ -104,8 +104,8 @@ export const allListings = [
     specifications: [
       {
         icon: 'BiBed',
-        label: 'Beds',
-        value: '3BHK'
+        label: 'Room Types',
+        value: '2BHK, 2.5BHK, 3BHK, 4BHK'
       },
       {
         icon: 'BiArea',
@@ -174,8 +174,8 @@ export const allListings = [
     specifications: [
       {
         icon: 'BiBed',
-        label: 'Beds',
-        value: '4BHK'
+        label: 'Room Types',
+        value: '4BHK, 5BHK, Penthouse'
       },
       {
         icon: 'BiArea',
@@ -246,8 +246,8 @@ export const allListings = [
     specifications: [
       {
         icon: 'BiBed',
-        label: 'Beds',
-        value: '2BHK'
+        label: 'Room Types',
+        value: '1BHK, 2BHK, 3BHK'
       },
       {
         icon: 'BiArea',
@@ -319,8 +319,8 @@ export const allListings = [
     specifications: [
       {
         icon: 'BiBed',
-        label: 'Beds',
-        value: '5BHK'
+        label: 'Room Types',
+        value: '4BHK, 5BHK, Penthouse'
       },
       {
         icon: 'BiArea',
@@ -367,7 +367,7 @@ export const allListings = [
   {
     _id: '6',
     name: 'MICL Aaradhya Avaan',
-    address: 'Malad West, Mumbai',
+    address: 'Tardeo, Mumbai',
     description: `MICL Aaradhya Avaan by MICL is an under-construction project in Tardeo, Mumbai, offering luxury with the blend of elegance and exclusivity. This upcoming address will be home for designer residences, ensuring comfort and well-being to its owners.
 
     MICL Aaradhya Avaan is scheduled for possession in Dec, 2030 and will offer expansive apartments in various configurations.
@@ -378,7 +378,7 @@ export const allListings = [
       range: '8.6Cr to 21.17Cr'
     },
     region: 'Mumbai',
-    location: 'Malad West',
+    location: 'Tardeo',
     rooms: '3BHK',
     imageUrls: [
       '/assets/Properties Images/AaradhyaAvaan/AaradhyaAvaan01.jpg',
@@ -391,8 +391,8 @@ export const allListings = [
     specifications: [
       {
         icon: 'BiBed',
-        label: 'Beds',
-        value: '3BHK'
+        label: 'Room Types',
+        value: '3BHK, 4BHK, 5BHK'
       },
       {
         icon: 'BiArea',
@@ -436,10 +436,11 @@ export const allListings = [
     developer: 'MICL',
     parking: 'Covered Parking'
   },
+
   {
     _id: '7',
     name: 'Lodha Amara',
-    address: 'Thane West',
+    address: 'Kolshet Road, Thane West',
     description: `Amara Towers a project by the Lodha Group, is located between West and East Thane. The project comprises 1, 2 and 3 BHK units ranging from 366 square feet to 1070 square feet.
 
     The project features a 30-acre landscaped open space that includes a play village, cricket pitch, children's play areas, and picnic areas with hammocks. Other amenities include a primary clubhouse, 5 smaller clubhouses, outdoor and indoor party venues, a floating deck and a poolside cafe.
@@ -449,7 +450,7 @@ export const allListings = [
     regularPrice: {
       range: '85Lakh to 2.5Cr'
     },
-    region: 'Mumbai',
+    region: 'Thane',
     location: 'Thane West',
     rooms: '2BHK',
     imageUrls: [
@@ -462,8 +463,8 @@ export const allListings = [
     specifications: [
       {
         icon: 'BiBed',
-        label: 'Beds',
-        value: '2BHK'
+        label: 'Room Types',
+        value: '1BHK, 2BHK, 3BHK, 4BHK'
       },
       {
         icon: 'BiArea',
@@ -510,7 +511,7 @@ export const allListings = [
   {
     _id: '8',
     name: 'K Raheja Modern Vivarea',
-    address: 'Thane West',
+    address: 'Mahalaxmi, Mumbai',
     description: `Raheja Modern Vivarea by K Raheja Corp is an under-construction project in Mahalaxmi, Mumbai, offering luxury with the blend of elegance and exclusivity. This upcoming address will be home for designer residences, ensuring comfort and well-being to its owners.
 
     Raheja Modern Vivarea is scheduled for possession in Mar, 2028 and will offer expansive apartments in various configurations.
@@ -521,7 +522,7 @@ export const allListings = [
       range: '12Cr to 22Cr'
     },
     region: 'Mumbai',
-    location: 'Thane West',
+    location: 'Mahalaxmi',
     rooms: '2BHK',
     imageUrls: [
       '/assets/Properties Images/ModernVivarea/ModernVivarea01.jpg',
@@ -532,8 +533,8 @@ export const allListings = [
     specifications: [
       {
         icon: 'BiBed',
-        label: 'Beds',
-        value: '2BHK'
+        label: 'Room Types',
+        value: '3BHK, 3.5BHK, 4BHK, 5BHK'
       },
       {
         icon: 'BiArea',
