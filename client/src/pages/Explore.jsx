@@ -410,7 +410,50 @@ export default function Explore() {
       ],
       developer: 'Developer Name',
       parking: 'Covered Parking'
+    },
+
+    {
+      _id: '10',
+      name: 'Sugee Marina Bay',
+      address: 'Worli, Mumbai',
+      description: 'Sugee Marina Bay by Sugee Group is an under-construction project in Worli, Mumbai, offering luxury with the blend of elegance and exclusivity...',
+      type: 'Apartment',
+      regularPrice: {
+        range: '11.65Cr to 44Cr'
+      },
+      region: 'Mumbai',
+      location: 'Worli',
+      rooms: ['3BHK', '4BHK'],
+      configurations: [
+        {
+          type: '2BHK',
+          specifications: [
+            'Built-up Area: 1200 sq.ft.',
+            'Semi-Furnished',
+            'Floor: 15th out of 30 floors',
+            'Age of Construction: Under Construction'
+          ]
+        }
+      ],
+      imageUrls: [
+        '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay1.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay2.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay3.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay4.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay5.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay6.jpg'
+      ],
+      amenities: [
+        'Swimming Pool',
+        'Gym',
+        'Club House',
+        '24/7 Security'
+      ],
+      developer: 'Sugee',
+      parking: 'Covered Parking'
     }
+
+
 
   ];
 

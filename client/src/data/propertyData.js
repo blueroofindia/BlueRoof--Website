@@ -583,7 +583,7 @@ export const allListings = [
   {
     _id: '9',
     name: 'Tribeca The Edge',
-    address: 'Lalbaug, Mumbai',
+    address: 'Lalbuag, Mumbai',
     description: `Tejukaya Corp has launched the epitome of luxury living in the name of The Edge, to offer luxurious and exclusive residences in the heart of Mumbai South.
     The Edge Lalbaug redefines the comfort living by offering stylish homes in the form of luxury apartments. It is a new launch project.
     Carefully crafted by its makers to set a new benchmark of exquisiteness and well-being, The Edge is going to be the most desirable address in Lalbaug, Parel.
@@ -655,6 +655,82 @@ export const allListings = [
       'Children Playing Area'
     ],
     developer: 'Tribeca',
+    parking: 'Covered Parking'
+  },
+
+  {
+    _id: '10',
+    name: 'Sugee Marina Bay',
+    address: 'Worli, Mumbai',
+    description: `Sugee Marina Bay by Sugee Group is an under-construction project in Worli, Mumbai, offering luxury with the blend of elegance and exclusivity. This upcoming address will be home for designer residences, ensuring comfort and well-being to its owners.
+    Sugee Marina Bay is scheduled for possession in Jun, 2025 and will offer expansive apartments in various configurations.
+
+    Sugee Marina Bay has uniquely designed floor plans and layouts to ensure ease and convenience for its residents. It promises a stress-free life for its residents where privacy and freedom come hand-in-hand for all homeowners. 
+    Built for a special few, Sugee Marina Bay Worli has single tower in this project, with 44 floors each and just 92 units to offer. Sugee Marina Bay will be an upscale address as it will be spread over an area of 1.95 acres,
+    making it one of the most lavishly built projects in the Mumbai South region. There is an impressive range of conveniences for every resident and each home at Sugee Marina Bay Worli, Mumbai will have a beautiful view, ensuring a relaxing atmosphere for its owners after a taxing day at work.
+`,
+    type: 'Apartment',
+    regularPrice: {
+      range: '11.65Cr to 44Cr'
+    },
+    region: 'Mumbai',
+    location: 'Worli',
+    rooms: '2BHK',
+    imageUrls: [
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay1.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay2.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay3.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay4.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay5.jpg',
+      '/assets/Properties Images/SugeeMarinaBay/SugeeMarinaBay6.jpg'
+      
+    ],
+    specifications: [
+      {
+        icon: 'BiBed',
+        label: 'Room Types',
+        value: '3BHK, 4BHK'
+      },
+      {
+        icon: 'BiArea',
+        label: 'Carpet Area',
+        value: '1817 to 3692 sq.ft.'
+      },
+      {
+        icon: 'BiIdCard',
+        label: 'Rera ID',
+        value: 'P51900011592'
+      },
+      {
+        icon: 'BiBuildings',
+        label: 'Storeys',
+        value: '44'
+      },
+      {
+        icon: 'BiTime',
+        label: 'Current Status',
+        value: 'Nearing Possesion'
+      },
+      {
+        icon: 'BiCalendar',
+        label: 'Possession Date',
+        value: 'Dec 2025'
+      },
+      {
+        icon: 'BiMapAlt',
+        label: 'Total Project Area',
+        value: '1.95 acres'
+      }
+    ],
+    amenities: [
+      'Swimming Pool',
+      'Gym',
+      'Garden',
+      'Club House',
+      'Security',
+      'Children Playing Area'
+    ],
+    developer: 'Sugee',
     parking: 'Covered Parking'
   }
 ];
