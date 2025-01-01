@@ -366,7 +366,52 @@ export default function Explore() {
       ],
       developer: 'Developer Name',
       parking: '2 Covered Parking'
+    },
+
+    {
+      _id: '9',
+      name: 'Tribeca The Edge',
+      address: 'Lalbuag, Mumbai',
+      description: 'Tejukaya Corp has launched the epitome of luxury living in the name of The Edge, to offer luxurious and exclusive residences in the heart of Mumbai South...',
+      type: 'Apartment',
+      regularPrice: {
+        range: '4.07Cr to 6.49Cr'
+      },
+      region: 'Mumbai',
+      location: 'Lalbuag',
+      rooms: ['2BHK','3BHK', '4BHK'],
+      configurations: [
+        {
+          type: '2BHK',
+          specifications: [
+            'Built-up Area: 1200 sq.ft.',
+            'Semi-Furnished',
+            'Floor: 15th out of 30 floors',
+            'Age of Construction: Under Construction'
+          ]
+        }
+      ],
+      imageUrls: [
+        '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge1.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge2.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge3.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge4.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge5.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge6.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge7.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge8.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge9.jpg'
+      ],
+      amenities: [
+        'Swimming Pool',
+        'Gym',
+        'Club House',
+        '24/7 Security'
+      ],
+      developer: 'Developer Name',
+      parking: 'Covered Parking'
     }
+
   ];
 
   // Update search term when URL parameter changes

@@ -508,6 +508,7 @@ export const allListings = [
     developer: 'Lodha',
     parking: 'Covered Parking'
   },
+
   {
     _id: '8',
     name: 'K Raheja Modern Vivarea',
@@ -559,7 +560,7 @@ export const allListings = [
       {
         icon: 'BiCalendar',
         label: 'Possession Date',
-        value: 'Mar 2028'
+        value: 'Sep 2028'
       },
       {
         icon: 'BiMapAlt',
@@ -575,7 +576,85 @@ export const allListings = [
       'Security',
       'Children Playing Area'
     ],
-    developer: 'Lodha',
+    developer: 'K Raheja',
+    parking: 'Covered Parking'
+  },
+
+  {
+    _id: '9',
+    name: 'Tribeca The Edge',
+    address: 'Lalbaug, Mumbai',
+    description: `Tejukaya Corp has launched the epitome of luxury living in the name of The Edge, to offer luxurious and exclusive residences in the heart of Mumbai South.
+    The Edge Lalbaug redefines the comfort living by offering stylish homes in the form of luxury apartments. It is a new launch project.
+    Carefully crafted by its makers to set a new benchmark of exquisiteness and well-being, The Edge is going to be the most desirable address in Lalbaug, Parel.
+    This project ensures a stress-free life for its residents through its thoughtfully designed floor plans that promise extreme privacy and freedom.
+    The Edge Lalbaug has 3 towers, with 46 floors each and  just 510 units to offer, making it a unique investment opportunity for a select few in Mumbai South property market.
+    The society will be completely ready for possession in Dec, 2028. The Edge will be an upscale address as it will be spread over an area of 2.4 acres, making it one of the most lavishly built projects in the Mumbai South region,
+    Apart from all the basic amenities available, The Edge Lalbaug, Parel will bring you range of high-end facilities.`,
+    type: 'Apartment',
+    regularPrice: {
+      range: '4.07Cr to 6.49Cr'
+    },
+    region: 'Mumbai',
+    location: 'Lalbuag',
+    rooms: '2BHK',
+    imageUrls: [
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge1.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge2.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge3.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge4.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge5.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge6.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge7.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge8.jpg',
+      '/assets/Properties Images/TribecaTheEdge/TribecaTheEdge9.jpg'
+    ],
+    specifications: [
+      {
+        icon: 'BiBed',
+        label: 'Room Types',
+        value: '2BHK, 3BHK, 4BHK'
+      },
+      {
+        icon: 'BiArea',
+        label: 'Carpet Area',
+        value: '800 to 1350 sq.ft.'
+      },
+      {
+        icon: 'BiIdCard',
+        label: 'Rera ID',
+        value: 'P51900032613'
+      },
+      {
+        icon: 'BiBuildings',
+        label: 'Storeys',
+        value: '46'
+      },
+      {
+        icon: 'BiTime',
+        label: 'Current Status',
+        value: 'Under Construction'
+      },
+      {
+        icon: 'BiCalendar',
+        label: 'Possession Date',
+        value: 'Dec 2029'
+      },
+      {
+        icon: 'BiMapAlt',
+        label: 'Total Project Area',
+        value: '2.4 acres'
+      }
+    ],
+    amenities: [
+      'Swimming Pool',
+      'Gym',
+      'Garden',
+      'Club House',
+      'Security',
+      'Children Playing Area'
+    ],
+    developer: 'Tribeca',
     parking: 'Covered Parking'
   }
 ];
