@@ -732,5 +732,84 @@ export const allListings = [
     ],
     developer: 'Sugee',
     parking: 'Covered Parking'
+  },
+
+  {
+    _id: '11',
+    name: 'Shapoorji Pollonji Minerva',
+    address: 'Mahalaxmi, Mumbai',
+    description: `Shapoorji Pollonji Minerva in Mahalaxmi, Mumbai is a ready-to-move housing society. It offers apartments in varied budget range. These units are a perfect combination of comfort and style, specifically designed to suit your requirements and conveniences. There are 3BHK, 4BHK, 5BHK and 6BHK Apartments available in this project. This housing society is now ready to be called home as families have started moving in. Check out some of the features of Lokhandwala Minerva housing society:
+
+                  Shapoorji Pollonji Minerva Mahalaxmi has single tower, with 67 floors each and 372 units on offer.
+
+                  Spread over an area of 1.95 acres, Shapoorji Pollonji Minerva Mahalaxmi, Mumbai is one of the spacious housing societies in the Mumbai South region. With all the basic amenities available, Lokhandwala Minerva fits into your budget and your lifestyle.
+
+                  Mahalaxmi, Mumbai has good connectivity to some of the important areas in the proximity such as Haji Ali, Gateway of India and Willingdon Club.`,
+    type: 'Apartment',
+    regularPrice: {
+      range: '13Cr to 56.32Cr'
+    },
+    region: 'Mumbai',
+    location: 'Mahalaxmi',
+    rooms: '2BHK',
+    imageUrls: [
+      '/assets/Properties Images/ShapoorjiPollonji/ShapoorjiPollonji1.jpg',
+      '/assets/Properties Images/ShapoorjiPollonji/ShapoorjiPollonji2.jpg',
+      '/assets/Properties Images/ShapoorjiPollonji/ShapoorjiPollonji3.jpg',
+      '/assets/Properties Images/ShapoorjiPollonji/ShapoorjiPollonji4.jpg',
+      '/assets/Properties Images/ShapoorjiPollonji/ShapoorjiPollonji5.jpg',
+      '/assets/Properties Images/ShapoorjiPollonji/ShapoorjiPollonji6.jpg',
+      '/assets/Properties Images/ShapoorjiPollonji/ShapoorjiPollonji7.jpg'
+      
+    ],
+    specifications: [
+      {
+        icon: 'BiBed',
+        label: 'Room Types',
+        value: '3BHK, 4BHK'
+      },
+      {
+        icon: 'BiArea',
+        label: 'Carpet Area',
+        value: '3500++ sq.ft.'
+      },
+      {
+        icon: 'BiIdCard',
+        label: 'Rera ID',
+        value: 'A51900014296'
+      },
+      {
+        icon: 'BiBuildings',
+        label: 'Storeys',
+        value: '70'
+      },
+      {
+        icon: 'BiTime',
+        label: 'Current Status',
+        value: 'Ready To Move'
+      },
+      {
+        icon: 'BiCalendar',
+        label: 'Possession Date',
+        value: 'Dec 2024'
+      },
+      {
+        icon: 'BiMapAlt',
+        label: 'Total Project Area',
+        value: '1.95 acres'
+      }
+    ],
+    amenities: [
+      'Swimming Pool',
+      'Gym',
+      'Garden',
+      'Club House',
+      'Security',
+      'Children Playing Area'
+    ],
+    developer: 'Sugee',
+    parking: 'Covered Parking'
   }
+
+
 ];
