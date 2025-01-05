@@ -807,7 +807,230 @@ export const allListings = [
       'Security',
       'Children Playing Area'
     ],
-    developer: 'Sugee',
+    developer: 'Shapoorji Pollonji',
+    parking: 'Covered Parking'
+  },
+
+  {
+    _id: '12',
+    name: 'Piramal Mahalaxmi',
+    address: 'Mahalaxmi, Mumbai',
+    description: `Piramal Mahalaxmi by Piramal Realty is an under-construction project in Mahalaxmi, Mumbai, offering luxury with the blend of elegance and exclusivity. This upcoming address will be home for designer residences, ensuring comfort and well-being to its owners.
+
+                Piramal Mahalaxmi, South Tower is scheduled for possession in Dec, 2024 and will offer expansive apartments in various configurations.
+
+                Piramal Mahalaxmi has uniquely designed floor plans and layouts to ensure ease and convenience for its residents. It promises a stress-free life for its residents where privacy and freedom come hand-in-hand for all homeowners.
+                Built for a special few, Piramal Mahalaxmi has 3 towers in this project North Tower, South Tower & Central Tower. Piramal Mahalaxmi will be an upscale address as it will be spread over an area of 4 acres, making it one of the most lavishly built projects in the Mumbai South region. There is an impressive range of conveniences for every resident and each home at Piramal Mahalaxmi,
+                Mumbai will have a beautiful view, ensuring a relaxing atmosphere for its owners after a taxing day at work.`,
+    type: 'Apartment',
+    regularPrice: {
+      range: '5Cr to 14.99Cr'
+    },
+    region: 'Mumbai',
+    location: 'Mahalaxmi',
+    rooms: '2BHK',
+    imageUrls: [
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi1.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi2.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi3.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi4.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi5.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi6.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi7.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi8.jpg'
+    ],
+    specifications: [
+      {
+        icon: 'BiBed',
+        label: 'Room Types',
+        value: '2BHK, 3BHK, 4BHK'
+      },
+      {
+        icon: 'BiArea',
+        label: 'Carpet Area',
+        value: '774 to 1800 sq.ft.'
+      },
+      {
+        icon: 'BiIdCard',
+        label: 'Rera ID',
+        value: 'P51900015854'
+      },
+      {
+        icon: 'BiBuildings',
+        label: 'Storeys',
+        value: '65'
+      },
+      {
+        icon: 'BiTime',
+        label: 'Current Status',
+        value: 'Nearing Possesion'
+      },
+      {
+        icon: 'BiCalendar',
+        label: 'Possession Date',
+        value: 'Dec 2025'
+      },
+      {
+        icon: 'BiMapAlt',
+        label: 'Total Project Area',
+        value: '4 acres'
+      }
+    ],
+    amenities: [
+      'Swimming Pool',
+      'Gym',
+      'Garden',
+      'Club House',
+      'Security',
+      'Children Playing Area'
+    ],
+    developer: 'Piramal',
+    parking: 'Covered Parking'
+  },
+
+  {
+    _id: '13',
+    name: 'Piramal Aranya',
+    address: 'Byculla, Mumbai',
+    description: `Piramal Aranya offers an exceptional ensemble of bespoke wellness and beautifully appointed 2, 3, 4 & 5 bedroom luxury apartments in Byculla, South Mumbai. The project has 360-degree views of the Rani Baug botanical gardens on one side and the eastern harbour as well as the cityscape on the other.
+                  Piramal Aranya comes with excellent connectivity, good frontage & visibility along major access roads. 
+
+                  It resides near every need of residents. It connects to world-class medical facilities, prominent business districts, reputed educational institutions, and shopping and entertainment hubs within a few kilometres. Even for transportation, MTHL, Eastern freeway, coastal road and airport are a few minutes away.`,
+    type: 'Apartment',
+    regularPrice: {
+      range: '3.2Cr to 17.33Cr'
+    },
+    region: 'Mumbai',
+    location: 'Byculla',
+    rooms: '2BHK',
+    imageUrls: [
+      '/assets/Properties Images/PiramalAranya/PiramalAranya1.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya2.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya3.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya4.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya5.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya6.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya7.jpg'
+    ],
+    specifications: [
+      {
+        icon: 'BiBed',
+        label: 'Room Types',
+        value: '2BHK, 3BHK, 4BHK'
+      },
+      {
+        icon: 'BiArea',
+        label: 'Carpet Area',
+        value: '637 to 1907 sq.ft.'
+      },
+      {
+        icon: 'BiIdCard',
+        label: 'Rera ID',
+        value: 'P51900003324, P51900018039, P51900020330, P51900051735 '
+      },
+      {
+        icon: 'BiBuildings',
+        label: 'Storeys',
+        value: '72'
+      },
+      {
+        icon: 'BiTime',
+        label: 'Current Status',
+        value: 'Ready to Move / Under Construction'
+      },
+      {
+        icon: 'BiCalendar',
+        label: 'Possession Date',
+        value: 'Dec 2027'
+      },
+      {
+        icon: 'BiMapAlt',
+        label: 'Total Project Area',
+        value: '7.63 acres'
+      }
+    ],
+    amenities: [
+      'Swimming Pool',
+      'Gym',
+      'Garden',
+      'Club House',
+      'Security',
+      'Children Playing Area'
+    ],
+    developer: 'Piramal',
+    parking: 'Covered Parking'
+  },
+
+  {
+    _id: '14',
+    name: 'Raheja Amaltis',
+    address: 'Sion, Mumbai',
+    description: `K Raheja Corp has launched the epitome of luxury living in the name of K Raheja Amaltis, to offer luxurious and exclusive residences in the heart of Central Mumbai. K Raheja Amaltis Sion West redefines the comfort living by offering stylish homes in the form of luxury apartments. It is a new launch project. 
+                  Carefully crafted by its makers to set a new benchmark of exquisiteness and well-being, K Raheja Amaltis is going to be the most desirable address in Sion West, Mumbai.
+                  This project ensures a stress-free life for its residents through its thoughtfully designed floor plans that promise extreme privacy and freedom. K Raheja Amaltis Sion West has 3 towers, with 17 floors each and  just 125 units to offer, making it a unique investment opportunity for a select few in Central Mumbai property market. 
+                  The society will be completely ready for possession in Sep, 2028.
+                  K Raheja Amaltis will be an upscale address as it will be spread over an area of 1.52 acres, making it one of the most lavishly built projects in the Central Mumbai region, Apart from all the basic amenities available, K Raheja Amaltis Sion West, Mumbai will bring you range of high-end facilities.`,
+    type: 'Apartment',
+    regularPrice: {
+      range: '5.42Cr to 10.39Cr'
+    },
+    region: 'Mumbai',
+    location: 'Sion',
+    rooms: '2BHK',
+    imageUrls: [
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis1.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis2.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis3.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis4.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis5.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis6.jpg'
+    ],
+    specifications: [
+      {
+        icon: 'BiBed',
+        label: 'Room Types',
+        value: '2BHK, 3BHK, 4BHK'
+      },
+      {
+        icon: 'BiArea',
+        label: 'Carpet Area',
+        value: '1257 to 2175+ sq.ft.'
+      },
+      {
+        icon: 'BiIdCard',
+        label: 'Rera ID',
+        value: 'P51900054152'
+      },
+      {
+        icon: 'BiBuildings',
+        label: 'Storeys',
+        value: '25'
+      },
+      {
+        icon: 'BiTime',
+        label: 'Current Status',
+        value: 'Under Construction'
+      },
+      {
+        icon: 'BiCalendar',
+        label: 'Possession Date',
+        value: 'Sep 2028'
+      },
+      {
+        icon: 'BiMapAlt',
+        label: 'Total Project Area',
+        value: '0.5 acres'
+      }
+    ],
+    amenities: [
+      'Swimming Pool',
+      'Gym',
+      'Garden',
+      'Club House',
+      'Security',
+      'Children Playing Area'
+    ],
+    developer: 'Raheja',
     parking: 'Covered Parking'
   }
 

@@ -493,7 +493,133 @@ export default function Explore() {
       ],
       developer: 'Sugee',
       parking: 'Covered Parking'
-    }
+    },
+
+    {
+      _id: '12',
+      name: 'Piramal Mahalaxmi',
+      address: 'Mahalaxmi, Mumbai',
+      description: 'Piramal Mahalaxmi by Piramal Realty is an under-construction project in Mahalaxmi, Mumbai, offering luxury with the blend of elegance and exclusivity...',
+      type: 'Apartment',
+      regularPrice: {
+        range: '5Cr to 14.99Cr'
+      },
+      region: 'Mumbai',
+      location: 'Mahalaxmi',
+      rooms: ['2BHK','3BHK', '4BHK'],
+      configurations: [
+        {
+          type: '2BHK',
+          specifications: [
+            'Built-up Area: 1200 sq.ft.',
+            'Semi-Furnished',
+            'Floor: 15th out of 30 floors',
+            'Age of Construction: Under Construction'
+          ]
+        }
+      ],
+      imageUrls: [
+        '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi1.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi2.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi3.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi4.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi5.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi6.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi7.jpg',
+      '/assets/Properties Images/PiramalMahalaxmi/PiramalMahalaxmi8.jpg'
+      ],
+      amenities: [
+        'Swimming Pool',
+        'Gym',
+        'Club House',
+        '24/7 Security'
+      ],
+      developer: 'Sugee',
+      parking: 'Covered Parking'
+    },
+
+    {
+      _id: '13',
+      name: 'Piramal Aranya',
+      address: 'Byculla, Mumbai',
+      description: 'Piramal Aranya offers an exceptional ensemble of bespoke wellness and beautifully appointed 2, 3, 4 & 5 bedroom luxury apartments in Byculla, South Mumbai...',
+      type: 'Apartment',
+      regularPrice: {
+        range: '3.2Cr to 17.33Cr'
+      },
+      region: 'Mumbai',
+      location: 'Byculla',
+      rooms: ['2BHK','3BHK', '4BHK'],
+      configurations: [
+        {
+          type: '2BHK',
+          specifications: [
+            'Built-up Area: 1200 sq.ft.',
+            'Semi-Furnished',
+            'Floor: 15th out of 30 floors',
+            'Age of Construction: Under Construction'
+          ]
+        }
+      ],
+      imageUrls: [
+        '/assets/Properties Images/PiramalAranya/PiramalAranya1.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya2.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya3.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya4.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya5.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya6.jpg',
+      '/assets/Properties Images/PiramalAranya/PiramalAranya7.jpg'
+      ],
+      amenities: [
+        'Swimming Pool',
+        'Gym',
+        'Club House',
+        '24/7 Security'
+      ],
+      developer: 'Sugee',
+      parking: 'Covered Parking'
+    },
+
+    {
+      _id: '14',
+      name: 'Raheja Amaltis',
+      address: 'Sion, Mumbai',
+      description: 'K Raheja Corp has launched the epitome of luxury living in the name of K Raheja Amaltis, to offer luxurious and exclusive residences in the heart of Central Mumbai...',
+      type: 'Apartment',
+      regularPrice: {
+        range: '5.42Cr to 10.39Cr'
+      },
+      region: 'Mumbai',
+      location: 'Sion',
+      rooms: ['2BHK','3BHK', '4BHK'],
+      configurations: [
+        {
+          type: '2BHK',
+          specifications: [
+            'Built-up Area: 1200 sq.ft.',
+            'Semi-Furnished',
+            'Floor: 15th out of 30 floors',
+            'Age of Construction: Under Construction'
+          ]
+        }
+      ],
+      imageUrls: [
+        '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis1.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis2.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis3.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis4.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis5.jpg',
+      '/assets/Properties Images/RahejaAmaltis/RahejaAmaltis6.jpg'
+      ],
+      amenities: [
+        'Swimming Pool',
+        'Gym',
+        'Club House',
+        '24/7 Security'
+      ],
+      developer: 'Sugee',
+      parking: 'Covered Parking'
+    }    
 
 
 
